@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 
 namespace HamerSoft.Victoria.Core.Search
 {
     public interface ISearch
     {
-        IEnumerable<Extractor.Extractor.Node> SearchByName(string currentSearchTerm);
+        IEnumerable<Node> SearchByName(string currentSearchTerm);
     }
 }

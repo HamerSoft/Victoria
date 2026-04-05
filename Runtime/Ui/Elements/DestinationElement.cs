@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 using HamerSoft.Victoria.Ui.Elements.Nodes;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,12 +15,12 @@ namespace HamerSoft.Victoria.Ui.Elements
     // import folders wherever you want VICTORIA
     public class DestinationElement : VisualElement
     {
-        private Extractor.Node _node;
+        private Node _node;
         private readonly UnityPackage _unityPackage;
         private VisualElement _container;
         private Label _destinationLabel;
         private string _destination;
-        private Extractor.FileSystemNode _destinationNode;
+        private FileSystemNode _destinationNode;
         private DestinationUiNode _rootNode;
         private ScrollView _scrollView;
         private readonly string _rootImportPath;
@@ -112,7 +112,7 @@ namespace HamerSoft.Victoria.Ui.Elements
 
                 Debug.Log("importing.");
                 var trueImports = ImportManifest.Imports;
-                List<Extractor.Node> nodesToWrite = new List<Extractor.Node>();
+                List<Node> nodesToWrite = new List<Node>();
                 foreach (var import in trueImports)
                 {
                     if (!import.Key.IsSelected)
@@ -123,8 +123,8 @@ namespace HamerSoft.Victoria.Ui.Elements
 
                 int totalNodes = nodesToWrite.Count;
                 int index = 0;
-                var writeQueue = new Queue<Extractor.Node>(nodesToWrite);
-                var uniqueWrites = new HashSet<Extractor.Node>();
+                var writeQueue = new Queue<Node>(nodesToWrite);
+                var uniqueWrites = new HashSet<Node>();
                 while (writeQueue.TryDequeue(out var node))
                 {
                     if (uniqueWrites.Contains(node))
@@ -139,12 +139,12 @@ namespace HamerSoft.Victoria.Ui.Elements
                 _onFinishedImport?.Invoke();
                 return;
 
-                List<Extractor.Node> CollectNodesToWriteOut(SelectableNode rootNoteToWrite)
+                List<Node> CollectNodesToWriteOut(SelectableNode rootNoteToWrite)
                 {
                     var selectedNodeQueue = new Queue<SelectableNode>();
                     selectedNodeQueue.Enqueue(rootNoteToWrite);
-                    var nodesToWriteOut = new List<Extractor.Node>();
-                    var nonExpandedNodes = new Queue<Extractor.Node>();
+                    var nodesToWriteOut = new List<Node>();
+                    var nonExpandedNodes = new Queue<Node>();
                     // collect all expanded and selected assets
                     while (selectedNodeQueue.TryDequeue(out var node))
                     {
@@ -183,13 +183,13 @@ namespace HamerSoft.Victoria.Ui.Elements
             }
         }
 
-        private Extractor.FileSystemNode LoadFileSystemNode(string destination)
+        private FileSystemNode LoadFileSystemNode(string destination)
         {
             try
             {
                 var destinationDir = new DirectoryInfo(destination);
                 return destinationDir.Exists
-                    ? new Extractor.FileSystemNode(destinationDir)
+                    ? new FileSystemNode(destinationDir)
                     : null;
             }
             catch (Exception e)

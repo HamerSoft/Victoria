@@ -1,5 +1,5 @@
 using System;
-using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 using HamerSoft.Victoria.Ui.Elements.Nodes;
 using HamerSoft.Victoria.Ui.SleurEnPleur;
 using UnityEngine.UIElements;
@@ -33,7 +33,7 @@ namespace HamerSoft.Victoria.Ui.Elements
             
         }
 
-        private void NodeFocussed(BaseUiNode uiNode, Extractor.Node node)
+        private void NodeFocussed(BaseUiNode uiNode, Node node)
         {
             if (uiNode is not SelectableNode)
                 return;

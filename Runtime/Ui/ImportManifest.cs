@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 using HamerSoft.Victoria.Ui.Elements.Nodes;
 
 namespace HamerSoft.Victoria.Ui
@@ -31,7 +31,7 @@ namespace HamerSoft.Victoria.Ui
             _imports.Remove(node);
         }
 
-        public static bool Contains(Extractor.Node node)
+        public static bool Contains(Node node)
         {
            return _imports.Keys.Any(k=> k.Node == node);
         }

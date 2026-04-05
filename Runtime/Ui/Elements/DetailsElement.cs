@@ -1,5 +1,5 @@
 using System;
-using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 using UnityEngine.UIElements;
 
 namespace HamerSoft.Victoria.Ui.Elements
@@ -29,7 +29,7 @@ namespace HamerSoft.Victoria.Ui.Elements
             splitView.Add(_destination = new DestinationElement(unityPackage, onFinishedImport));
         }
 
-        internal void SetNode(Extractor.Node node)
+        internal void SetNode(Node node)
         {
             _previewer.SetNode(node);
         }

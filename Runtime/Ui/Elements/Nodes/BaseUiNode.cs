@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,7 +12,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
         private const int UI_NODE_HEADER_HEIGHT = 20;
         private readonly VisualElement _contentContainer;
         protected BaseUiNode ParentUiNode;
-        internal readonly Extractor.Node Node;
+        internal readonly Node Node;
         protected readonly Label Label;
         public readonly int OriginalDepth;
         private bool _isLocked => _lockedCounter > 0;
@@ -20,7 +20,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
         private readonly List<SelectableNode> _imports = new List<SelectableNode>();
         protected int Depth;
         internal ScrollView ParentScrollView { get; private set; }
-        private readonly Extractor.Node _originalParentNode;
+        private readonly Node _originalParentNode;
         private ScrollView _originalParentScrollView;
         private int _lockedCounter;
         protected virtual int DepthMultiplier { get; } = 2;
@@ -31,9 +31,9 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
         public bool IsLeaf => Node.IsLeaf;
         public bool IsExpanded => _isExpanded;
 
-        internal static event Action<BaseUiNode, Extractor.Node> Focussed;
+        internal static event Action<BaseUiNode, Node> Focussed;
 
-        public BaseUiNode(Extractor.Node node, int depth, BaseUiNode parentNode)
+        public BaseUiNode(Node node, int depth, BaseUiNode parentNode)
         {
             name = node.Name;
             focusable = true;
@@ -258,7 +258,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
                 AddChild(childNode);
         }
 
-        private void AddChild(Extractor.Node node)
+        private void AddChild(Node node)
         {
             var uiNode = CreateNode(node);
             if (uiNode == null)
@@ -269,7 +269,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
             _contentContainer.Add(uiNode);
         }
 
-        protected virtual BaseUiNode CreateNode(Extractor.Node node)
+        protected virtual BaseUiNode CreateNode(Node node)
         {
             return new BaseUiNode(node, Depth + 1, this);
         }
@@ -295,7 +295,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
             return container;
         }
 
-        internal void FocusOn(Stack<Extractor.Node> nodes)
+        internal void FocusOn(Stack<Node> nodes)
         {
             if (nodes.TryPop(out var child))
             {

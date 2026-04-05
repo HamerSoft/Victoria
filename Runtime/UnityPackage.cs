@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using HamerSoft.Victoria.Core.Audio;
 using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 using HamerSoft.Victoria.Core.Search;
 using HamerSoft.Victoria.Loader;
 using HamerSoft.Victoria.Loader.Loader;
@@ -19,10 +20,10 @@ namespace HamerSoft.Victoria
         private readonly Dictionary<string, object> _cache;
         public readonly ISearch Search;
         public readonly string Name;
-        public Extractor.Folder Assets { get; }
+        public Folder Assets { get; }
         public IAudioSource AudioSource { get; }
 
-        internal UnityPackage(Extractor.Folder assets, IObjectLoader loader, ISearch search, IAudioSource audioSource)
+        internal UnityPackage(Folder assets, IObjectLoader loader, ISearch search, IAudioSource audioSource)
         {
             Name = assets.Name;
             AudioSource = audioSource;
@@ -32,7 +33,7 @@ namespace HamerSoft.Victoria
             _cache = new Dictionary<string, object>(DEFAULT_CAPACITY);
         }
 
-        public async Task<T> LoadObject<T>(string id, byte[] data, Extractor.Asset.Preview type,
+        public async Task<T> LoadObject<T>(string id, byte[] data, Asset.Preview type,
             CancellationToken token)
         {
             id = GenerateId(id, type);
@@ -59,7 +60,7 @@ namespace HamerSoft.Victoria
             _cache.Add(id, cacheObject);
         }
 
-        private string GenerateId(string id, Extractor.Asset.Preview type)
+        private string GenerateId(string id, Asset.Preview type)
         {
             return $"{type.ToString()}-{id}";
         }

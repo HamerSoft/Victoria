@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 using HamerSoft.Victoria.Ui.SleurEnPleur;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -18,12 +18,12 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
         public bool IsSelected => _isSelected;
         public IEnumerable<SelectableNode> ChildrenNodes => base.ChildUiNodes.Cast<SelectableNode>();
 
-        public SelectableNode(Extractor.Node node, int depth, VisualElement parent) : this(node, depth, null)
+        public SelectableNode(Node node, int depth, VisualElement parent) : this(node, depth, null)
         {
             _originalContentContainer = parent;
         }
 
-        public SelectableNode(Extractor.Node node, int depth, SelectableNode parentNode) : base(node, depth, parentNode)
+        public SelectableNode(Node node, int depth, SelectableNode parentNode) : base(node, depth, parentNode)
         {
             _parentNode = _originalParentUiNode = parentNode;
             _originalContentContainer = parentNode?.contentContainer;
@@ -82,7 +82,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
             _parentNode?.PropagateSelected(isSelected);
         }
 
-        protected override BaseUiNode CreateNode(Extractor.Node node)
+        protected override BaseUiNode CreateNode(Node node)
         {
             return ImportManifest.Contains(node)
                 ? null

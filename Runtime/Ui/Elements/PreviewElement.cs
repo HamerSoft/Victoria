@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,7 +11,7 @@ namespace HamerSoft.Victoria.Ui.Elements
     {
         private const int MAXIMUM_UNITY_UI_TEXT_LENGTH = 11000;
         private readonly UnityPackage _unityPackage;
-        private Extractor.Node _node;
+        private Node _node;
         private CancellationTokenSource _cancellationTokenSource;
         private VisualElement _previewElement;
 
@@ -21,7 +21,7 @@ namespace HamerSoft.Victoria.Ui.Elements
             SetNode(unityPackage.Assets);
         }
 
-        internal void SetNode(Extractor.Node node)
+        internal void SetNode(Node node)
         {
             if (_node == node)
                 return;
@@ -32,16 +32,16 @@ namespace HamerSoft.Victoria.Ui.Elements
             _ = ShowPreview(node, _cancellationTokenSource.Token);
         }
 
-        private async Task ShowPreview(Extractor.Node node, CancellationToken token)
+        private async Task ShowPreview(Node node, CancellationToken token)
         {
             ClearPreview();
             if (node == null)
                 _previewElement = ShowNoPreview();
             else if (node.IsLeaf)
             {
-                _previewElement = ShowLoadingPreview(node as Extractor.Asset);
+                _previewElement = ShowLoadingPreview(node as Asset);
                 if (!token.IsCancellationRequested)
-                    _previewElement = await ShowFilePreview(node as Extractor.Asset, token);
+                    _previewElement = await ShowFilePreview(node as Asset, token);
             }
             else
                 _previewElement = ShowDirectoryPreview(node);
@@ -55,7 +55,7 @@ namespace HamerSoft.Victoria.Ui.Elements
                 _previewElement = null;
         }
 
-        private VisualElement ShowLoadingPreview(Extractor.Asset node)
+        private VisualElement ShowLoadingPreview(Asset node)
         {
             return new Label
             {
@@ -83,13 +83,13 @@ namespace HamerSoft.Victoria.Ui.Elements
             };
         }
 
-        private async Task<VisualElement> ShowFilePreview(Extractor.Asset asset, CancellationToken token)
+        private async Task<VisualElement> ShowFilePreview(Asset asset, CancellationToken token)
         {
             return asset.GetPreviewType() switch
             {
-                Extractor.Asset.Preview.PlainText => await ShowTextContent(),
-                Extractor.Asset.Preview.Image => await ShowImageContent(asset),
-                Extractor.Asset.Preview.Audio => await ShowAudioPreview(asset),
+                Asset.Preview.PlainText => await ShowTextContent(),
+                Asset.Preview.Image => await ShowImageContent(asset),
+                Asset.Preview.Audio => await ShowAudioPreview(asset),
                 _ => ShowNoPreviewerAvailable()
             };
 
@@ -105,7 +105,7 @@ namespace HamerSoft.Victoria.Ui.Elements
                         }
                     };
                     var text = await _unityPackage.LoadObject<string>(asset.Name, asset.FileContent,
-                        Extractor.Asset.Preview.PlainText, _cancellationTokenSource.Token);
+                        Asset.Preview.PlainText, _cancellationTokenSource.Token);
                     text = text.Length > MAXIMUM_UNITY_UI_TEXT_LENGTH
                         ? $"{text.Substring(0, MAXIMUM_UNITY_UI_TEXT_LENGTH)}\r\n...\r\nText is truncated..."
                         : text;
@@ -146,7 +146,7 @@ namespace HamerSoft.Victoria.Ui.Elements
             }
         }
 
-        private async Task<VisualElement> ShowAudioPreview(Extractor.Asset asset)
+        private async Task<VisualElement> ShowAudioPreview(Asset asset)
         {
             var container = new VisualElement
             {
@@ -189,7 +189,7 @@ namespace HamerSoft.Victoria.Ui.Elements
                 Debug.Log("Clicked play");
                 // key must be unique, audio will have added image and clip. so some other unique need be
                 var audioClip = await _unityPackage.LoadObject<AudioClip>(asset.DetailedName, asset.FileContent,
-                    Extractor.Asset.Preview.Audio, _cancellationTokenSource.Token);
+                    Asset.Preview.Audio, _cancellationTokenSource.Token);
 
                 if (audioClip)
                     _unityPackage.AudioSource.Play(audioClip);
@@ -213,14 +213,14 @@ namespace HamerSoft.Victoria.Ui.Elements
             return container;
         }
 
-        private async Task<VisualElement> ShowImageContent(Extractor.Asset asset)
+        private async Task<VisualElement> ShowImageContent(Asset asset)
         {
             if (asset.PreviewContent?.Length == 0)
                 return ShowNoPreview();
             try
             {
                 var texture = await _unityPackage.LoadObject<Texture2D>(asset.Name, asset.PreviewContent,
-                    Extractor.Asset.Preview.Image, _cancellationTokenSource.Token);
+                    Asset.Preview.Image, _cancellationTokenSource.Token);
 
                 if (texture == null)
                     return ShowNoPreview();
@@ -242,9 +242,9 @@ namespace HamerSoft.Victoria.Ui.Elements
             return null;
         }
 
-        private VisualElement ShowDirectoryPreview(Extractor.Node node)
+        private VisualElement ShowDirectoryPreview(Node node)
         {
-            var numberOfSubDirectories = node.Children.Count(n => n is Extractor.Folder);
+            var numberOfSubDirectories = node.Children.Count(n => n is Folder);
 
             return new Label
             {

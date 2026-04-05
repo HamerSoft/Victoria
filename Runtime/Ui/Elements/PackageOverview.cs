@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 using HamerSoft.Victoria.Ui.Elements.Nodes;
 using UnityEngine.UIElements;
 
@@ -38,9 +38,9 @@ namespace HamerSoft.Victoria.Ui.Elements
             _rootNode.Focus();
         }
 
-        private void OnNodeSearched(Extractor.Node searchedNode)
+        private void OnNodeSearched(Node searchedNode)
         {
-            var parents = new Stack<Extractor.Node>();
+            var parents = new Stack<Node>();
 
             var currentNode = searchedNode;
             while (currentNode != null)
