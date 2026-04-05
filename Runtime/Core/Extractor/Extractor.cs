@@ -268,7 +268,7 @@ namespace HamerSoft.Victoria.Core.Extractor
             }
         }
 
-        public static UnityPackage Parse(FileInfo inputFile, IAudioSource audioSource)
+        public static Folder Parse(FileInfo inputFile)
         {
             using MemoryStream tarStream = new MemoryStream();
             using (var inStream = File.OpenRead(inputFile.FullName))
@@ -280,8 +280,7 @@ namespace HamerSoft.Victoria.Core.Extractor
             tarStream.Position = 0;
 
             ExtractTar(inputFile.Name, tarStream, out var assets);
-            return new UnityPackage(assets, new ObjectLoader(), new Searcher(assets),
-                audioSource);
+            return assets;
         }
 
         static void ExtractTar(string assetName, Stream tarStream, out Folder assets)

@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using HamerSoft.Victoria.Core.Audio;
 using HamerSoft.Victoria.Core.Extractor;
 using HamerSoft.Victoria.Core.Search;
+using HamerSoft.Victoria.Loader;
 using HamerSoft.Victoria.Loader.Loader;
+using UnityEngine;
 
 namespace HamerSoft.Victoria
 {
@@ -19,7 +22,7 @@ namespace HamerSoft.Victoria
         public Extractor.Folder Assets { get; }
         public IAudioSource AudioSource { get; }
 
-        public UnityPackage(Extractor.Folder assets, IObjectLoader loader, ISearch search, IAudioSource audioSource)
+        internal UnityPackage(Extractor.Folder assets, IObjectLoader loader, ISearch search, IAudioSource audioSource)
         {
             Name = assets.Name;
             AudioSource = audioSource;
@@ -68,6 +71,26 @@ namespace HamerSoft.Victoria
                     UnityEngine.Object.Destroy(unityObject);
             _cache.Clear();
             AudioSource?.Dispose();
+        }
+
+        public static UnityPackage LoadFromPath(FileInfo selectedPackage, IAudioSource audioSource)
+        {
+            try
+            {
+                var assets = Extractor.Parse(selectedPackage);
+                if (assets != null)
+                {
+                    return new UnityPackage(assets, new ObjectLoader(), new Searcher(assets),
+                        audioSource);
+                }
+
+                throw new FileLoadException("Failed to load package " + selectedPackage);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to load package {e}");
+                throw;
+            }
         }
     }
 }
