@@ -1,0 +1,20 @@
+{
+    "name": "com.hamersoft.victoria.Tests.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5ec3ceb8eaede20cebf9d320b9817ed8",
+        "GUID:31d4631054a7f7d98ba46ae6d5ff8fb2",
+        "GUID:e3b42ca6509c332338b2ca0900a5e07c"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

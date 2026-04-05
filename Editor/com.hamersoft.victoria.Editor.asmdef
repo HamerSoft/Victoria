@@ -1,0 +1,18 @@
+{
+    "name": "com.hamersoft.victoria.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5ec3ceb8eaede20cebf9d320b9817ed8"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

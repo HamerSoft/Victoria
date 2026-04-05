@@ -1,0 +1,16 @@
+{
+    "name": "com.hamersoft.victoria.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5ec3ceb8eaede20cebf9d320b9817ed8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
