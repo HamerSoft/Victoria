@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using HamerSoft.Victoria.Core.Audio;
 using HamerSoft.Victoria.Core.Extractor;
 using HamerSoft.Victoria.Core.Extractor.Nodes;
+using HamerSoft.Victoria.Core.Import;
 using HamerSoft.Victoria.Core.Search;
 using HamerSoft.Victoria.Loader;
 using HamerSoft.Victoria.Loader.Loader;
+using HamerSoft.Victoria.Ui;
 using UnityEngine;
 
 namespace HamerSoft.Victoria
@@ -72,6 +74,12 @@ namespace HamerSoft.Victoria
                     UnityEngine.Object.Destroy(unityObject);
             _cache.Clear();
             AudioSource?.Dispose();
+        }
+
+        internal async Task Import(string rootImportPath, ImportManifest importManifest, Action<string> onUpdate)
+        {
+            using var importer = new Importer(rootImportPath, importManifest);
+            await importer.Import(onUpdate);
         }
 
         public static UnityPackage LoadFromPath(FileInfo selectedPackage, IAudioSource audioSource)

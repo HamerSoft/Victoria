@@ -54,7 +54,7 @@ namespace HamerSoft.Victoria.Ui.SleurEnPleur
 
             if (!_wasDragged)
             {
-                _targetNode.StartDrag(DragContext.DragParent);
+                _targetNode.StartDrag();
                 target.style.position = Position.Absolute;
             }
 
@@ -111,17 +111,7 @@ namespace HamerSoft.Victoria.Ui.SleurEnPleur
                 }
 
             _picked.Clear();
-
-            if (dropTarget != null)
-            {
-                _targetNode.Reparent(dropTarget);
-            }
-            else
-            {
-                _targetNode.StopDrag();
-                _targetNode.MarkAsDirty();
-            }
-
+            _targetNode.Drop(dropTarget);
             _wasDragged = false;
         }
     }

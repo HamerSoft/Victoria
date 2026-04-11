@@ -31,7 +31,7 @@ namespace HamerSoft.Victoria.Ui.Elements
 
             Add(searchBar);
             Add(_packageOverView);
-            _rootNode = new SelectableNode(unityPackage.Assets, 0, _packageOverView.contentContainer);
+            _rootNode = new SelectableNode(unityPackage.Assets, 0, (VisualElement)_packageOverView.contentContainer);
             _rootNode.RegisterScrollView(_packageOverView);
             _packageOverView.contentContainer.Add(_rootNode);
             _rootNode.ExpandOrCollapse();

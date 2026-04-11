@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using HamerSoft.Victoria.Core.Extractor.Nodes;
@@ -11,12 +12,15 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
     {
         private readonly Toggle _toggle;
         private bool _isSelected;
-        private SelectableNode _parentNode;
         private readonly SelectableNode _originalParentUiNode;
         private readonly VisualElement _originalContentContainer;
         private int _originalIndex;
         public bool IsSelected => _isSelected;
         public IEnumerable<SelectableNode> ChildrenNodes => base.ChildUiNodes.Cast<SelectableNode>();
+
+        public event Action<SelectableNode> Destroyed;
+        public event Action<SelectableNode> DragStarted;
+        public event Action<SelectableNode, BaseUiNode> Dropped;
 
         public SelectableNode(Node node, int depth, VisualElement parent) : this(node, depth, null)
         {
@@ -25,7 +29,6 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
 
         public SelectableNode(Node node, int depth, SelectableNode parentNode) : base(node, depth, parentNode)
         {
-            _parentNode = _originalParentUiNode = parentNode;
             _originalContentContainer = parentNode?.contentContainer;
             _isSelected = parentNode?._isSelected ?? true;
             Header.Insert(0, _toggle = new Toggle());
@@ -79,14 +82,12 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
         private void PropagateSelected(bool isSelected)
         {
             _toggle.SetValueWithoutNotify(isSelected);
-            _parentNode?.PropagateSelected(isSelected);
+            (ParentUiNode as SelectableNode)?.PropagateSelected(isSelected);
         }
 
         protected override BaseUiNode CreateNode(Node node)
         {
-            return ImportManifest.Contains(node)
-                ? null
-                : new SelectableNode(node, Depth + 1, this);
+            return UiNodeFactory.CreateSelectableNode(node, Depth + 1, this);
         }
 
         internal void Reparent(BaseUiNode destinationUiNode)
@@ -97,10 +98,16 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
             style.marginLeft = Depth * DepthMultiplier;
             UnRegisterDrop();
             destinationUiNode.RegisterDrop(this);
+            Node.Parent.Children.Remove(Node);
             Node.Parent = destinationUiNode.Node;
             ParentUiNode = destinationUiNode;
-            _parentNode = destinationUiNode as SelectableNode;
             MarkAsDirty();
+        }
+
+        protected override void Destroy()
+        {
+            Destroyed?.Invoke(this);
+            base.Destroy();
         }
 
         public void MarkAsDirty()
@@ -110,18 +117,21 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
             MarkDirtyRepaint();
         }
 
-        internal void StartDrag(VisualElement dragParent)
+        internal void StartDrag()
         {
             _originalIndex = _originalContentContainer.IndexOf(this);
-            RemoveFromHierarchy();
-            dragParent.Add(this);
-            BringToFront();
+            DragStarted?.Invoke(this);
         }
 
         internal void StopDrag()
         {
             RemoveFromHierarchy();
             _originalContentContainer.Insert(_originalIndex, this);
+        }
+
+        internal void Drop(BaseUiNode dropTarget)
+        {
+            Dropped?.Invoke(this, dropTarget);
         }
     }
 }

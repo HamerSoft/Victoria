@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace HamerSoft.Victoria.Ui.Elements.Nodes
 {
-    public class BaseUiNode : VisualElement
+    public abstract class BaseUiNode : VisualElement
     {
         private const int UI_NODE_HEADER_HEIGHT = 20;
         private readonly VisualElement _contentContainer;
@@ -15,13 +15,11 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
         internal readonly Node Node;
         protected readonly Label Label;
         public readonly int OriginalDepth;
-        private bool _isLocked => _lockedCounter > 0;
+        private bool IsLocked => _lockedCounter > 0;
+
         private bool _isExpanded;
-        private readonly List<SelectableNode> _imports = new List<SelectableNode>();
         protected int Depth;
         internal ScrollView ParentScrollView { get; private set; }
-        private readonly Node _originalParentNode;
-        private ScrollView _originalParentScrollView;
         private int _lockedCounter;
         protected virtual int DepthMultiplier { get; } = 2;
         protected List<BaseUiNode> ChildUiNodes { get; private set; } = new();
@@ -39,7 +37,6 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
             focusable = true;
             ParentUiNode = parentNode;
             Node = node;
-            _originalParentNode = Node.Parent;
             Depth = OriginalDepth = depth;
             style.flexDirection = new StyleEnum<FlexDirection>(FlexDirection.Column);
             DepthMultiplier = 2;
@@ -77,111 +74,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
                 Label.text = node.DetailedName;
             }
 
-            RegisterCallback<KeyDownEvent>(keyDownEvent =>
-            {
-                if (focusController.focusedElement != this)
-                    return;
-                int indexInParent;
-
-                switch (keyDownEvent.keyCode)
-                {
-                    case KeyCode.DownArrow:
-                        var currentParentNode = ParentUiNode;
-                        var currentUiNode = this;
-                        var currentNode = Node;
-                        if (currentParentNode == null)
-                        {
-                            if (_isExpanded && Node.HasChildren)
-                                currentUiNode.ChildUiNodes[0].Focus();
-
-                            break;
-                        }
-
-                        if (currentUiNode._isExpanded && currentNode.HasChildren &&
-                            currentUiNode.ChildUiNodes.Count > 0)
-                        {
-                            currentUiNode.ChildUiNodes[0].Focus();
-                            break;
-                        }
-
-                        indexInParent = currentParentNode.ChildUiNodes.IndexOf(currentUiNode);
-                        if (indexInParent < currentParentNode.ChildUiNodes.Count - 1)
-                        {
-                            currentParentNode.ChildUiNodes[indexInParent + 1].Focus();
-                            break;
-                        }
-
-                        while (currentParentNode is { ChildUiNodes: { Count: > 0 } })
-                        {
-                            currentUiNode = currentParentNode;
-                            currentNode = currentNode.Parent;
-                            currentParentNode = currentParentNode.ParentUiNode;
-                            if (currentUiNode == null || currentParentNode == null)
-                                break;
-                            indexInParent = currentParentNode.ChildUiNodes.IndexOf(currentUiNode);
-                            if (indexInParent < currentParentNode.ChildUiNodes.Count - 1)
-                            {
-                                currentParentNode.ChildUiNodes[indexInParent + 1].Focus();
-                                break;
-                            }
-                        }
-
-                        break;
-                    case KeyCode.UpArrow:
-                        if (ParentUiNode == null)
-                            return;
-                        indexInParent = ParentUiNode.ChildUiNodes.IndexOf(this);
-                        if (indexInParent > 0)
-                        {
-                            var sibling = ParentUiNode.ChildUiNodes[indexInParent - 1];
-                            while (sibling._isExpanded)
-                            {
-                                if (sibling.ChildUiNodes.Count == 0)
-                                    break;
-                                sibling = sibling.ChildUiNodes.Last();
-                            }
-
-                            sibling.Focus();
-                        }
-                        else
-                        {
-                            ParentUiNode.Focus();
-                        }
-
-                        break;
-                    case KeyCode.LeftArrow:
-                        if (_isExpanded && !_isLocked)
-                        {
-                            Collapse();
-                            _isExpanded = false;
-                            SetLabelText(_isExpanded);
-                        }
-                        else
-                        {
-                            ParentUiNode?.Focus();
-                        }
-
-                        break;
-                    case KeyCode.RightArrow:
-                        if (Node.HasChildren)
-                        {
-                            if (!_isExpanded)
-                            {
-                                Expand();
-                                _isExpanded = true;
-                                SetLabelText(_isExpanded);
-                            }
-
-                            if (ChildUiNodes.Count > 0)
-                                ChildUiNodes[0]?.Focus();
-                        }
-
-                        break;
-                    default:
-                        return;
-                }
-            });
-
+            RegisterCallback<KeyDownEvent>(OnKeyDown);
             var normalColor = Color.clear;
             var focusColor = new Color(0.235f, 0.55f, 1f, 0.25f); // Soft blue, 25% opacity
 
@@ -199,6 +92,104 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
                 if (focusController.focusedElement != this)
                     Header.style.backgroundColor = normalColor;
             });
+        }
+
+        private void OnKeyDown(KeyDownEvent keyDownEvent)
+        {
+            if (focusController.focusedElement != this) return;
+            int indexInParent;
+
+            switch (keyDownEvent.keyCode)
+            {
+                case KeyCode.DownArrow:
+                    var currentParentNode = ParentUiNode;
+                    var currentUiNode = this;
+                    var currentNode = Node;
+                    if (currentParentNode == null)
+                    {
+                        if (_isExpanded && Node.HasChildren) currentUiNode.ChildUiNodes[0].Focus();
+
+                        break;
+                    }
+
+                    if (currentUiNode._isExpanded && currentNode.HasChildren && currentUiNode.ChildUiNodes.Count > 0)
+                    {
+                        currentUiNode.ChildUiNodes[0].Focus();
+                        break;
+                    }
+
+                    indexInParent = currentParentNode.ChildUiNodes.IndexOf(currentUiNode);
+                    if (indexInParent < currentParentNode.ChildUiNodes.Count - 1)
+                    {
+                        currentParentNode.ChildUiNodes[indexInParent + 1].Focus();
+                        break;
+                    }
+
+                    while (currentParentNode is { ChildUiNodes: { Count: > 0 } })
+                    {
+                        currentUiNode = currentParentNode;
+                        currentNode = currentNode.Parent;
+                        currentParentNode = currentParentNode.ParentUiNode;
+                        if (currentUiNode == null || currentParentNode == null) break;
+                        indexInParent = currentParentNode.ChildUiNodes.IndexOf(currentUiNode);
+                        if (indexInParent < currentParentNode.ChildUiNodes.Count - 1)
+                        {
+                            currentParentNode.ChildUiNodes[indexInParent + 1].Focus();
+                            break;
+                        }
+                    }
+
+                    break;
+                case KeyCode.UpArrow:
+                    if (ParentUiNode == null) return;
+                    indexInParent = ParentUiNode.ChildUiNodes.IndexOf(this);
+                    if (indexInParent > 0)
+                    {
+                        var sibling = ParentUiNode.ChildUiNodes[indexInParent - 1];
+                        while (sibling._isExpanded)
+                        {
+                            if (sibling.ChildUiNodes.Count == 0) break;
+                            sibling = sibling.ChildUiNodes.Last();
+                        }
+
+                        sibling.Focus();
+                    }
+                    else
+                    {
+                        ParentUiNode.Focus();
+                    }
+
+                    break;
+                case KeyCode.LeftArrow:
+                    if (_isExpanded && !IsLocked)
+                    {
+                        Collapse();
+                        _isExpanded = false;
+                        SetLabelText(_isExpanded);
+                    }
+                    else
+                    {
+                        ParentUiNode?.Focus();
+                    }
+
+                    break;
+                case KeyCode.RightArrow:
+                    if (Node.HasChildren)
+                    {
+                        if (!_isExpanded)
+                        {
+                            Expand();
+                            _isExpanded = true;
+                            SetLabelText(_isExpanded);
+                        }
+
+                        if (ChildUiNodes.Count > 0) ChildUiNodes[0]?.Focus();
+                    }
+
+                    break;
+                default:
+                    return;
+            }
         }
 
         internal void ExpandOrCollapse()
@@ -246,10 +237,16 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
 
         private void Collapse()
         {
-            if (_isLocked)
+            if (IsLocked)
                 return;
             _contentContainer?.Clear();
+            foreach (var node in ChildUiNodes)
+                node.Destroy();
             ChildUiNodes.Clear();
+        }
+
+        protected virtual void Destroy()
+        {
         }
 
         private void Expand()
@@ -269,10 +266,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
             _contentContainer.Add(uiNode);
         }
 
-        protected virtual BaseUiNode CreateNode(Node node)
-        {
-            return new BaseUiNode(node, Depth + 1, this);
-        }
+        protected abstract BaseUiNode CreateNode(Node node);
 
         private void SetLabelText(bool isExpanded)
         {
@@ -322,9 +316,6 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
 
         internal void RegisterScrollView(ScrollView parentScrollView)
         {
-            if (ParentScrollView is null)
-                _originalParentScrollView = parentScrollView;
-
             ParentScrollView = parentScrollView;
             if (Node.IsLeaf || ChildUiNodes == null)
                 return;
@@ -344,24 +335,17 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
 
         internal void RegisterDrop(SelectableNode selectableNode)
         {
-            _imports.Add(selectableNode);
-            ImportManifest.Add(selectableNode, this);
             SetIsLockedPropagating(true);
             ChildUiNodes.Add(selectableNode);
             selectableNode.RegisterScrollView(ParentScrollView);
             if (!IsExpanded)
                 ExpandOrCollapse();
-            Debug.Log($"{name} registered imports: {string.Join(", ", _imports.Select(i => i.name))}");
         }
 
         internal void UnRegisterDrop()
         {
-            ParentUiNode._imports.Remove(this as SelectableNode);
-            ImportManifest.Remove(this as SelectableNode);
             SetIsLockedPropagating(false);
             ParentUiNode.ChildUiNodes.Remove(this);
-            Debug.Log(
-                $"{ParentUiNode.name} registered imports: {string.Join(", ", ParentUiNode._imports.Select(i => i.name))}");
         }
     }
 }

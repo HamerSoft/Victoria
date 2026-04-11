@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using HamerSoft.Victoria.Core.Extractor.Nodes;
+using HamerSoft.Victoria.Core.Import;
 using HamerSoft.Victoria.Ui.Elements.Nodes;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -13,7 +14,7 @@ namespace HamerSoft.Victoria.Ui.Elements
     // Can traverse path only down, not up (security)
     // drag and drop from importer to destination and flag elements to be selected
     // import folders wherever you want VICTORIA
-    public class DestinationElement : VisualElement
+    internal class DestinationElement : VisualElement
     {
         private Node _node;
         private readonly UnityPackage _unityPackage;
@@ -25,10 +26,12 @@ namespace HamerSoft.Victoria.Ui.Elements
         private ScrollView _scrollView;
         private readonly string _rootImportPath;
         private Label _importLabel;
-        private Action _onFinishedImport;
+        private readonly Action _onFinishedImport;
+        private ImportManifest _importManifest;
 
-        public DestinationElement(UnityPackage unityPackage, Action onFinishedImport)
+        public DestinationElement(UnityPackage unityPackage, ImportManifest importManifest, Action onFinishedImport)
         {
+            _importManifest = importManifest;
             _onFinishedImport = onFinishedImport;
             _unityPackage = unityPackage;
             name = "destination";
@@ -104,78 +107,8 @@ namespace HamerSoft.Victoria.Ui.Elements
         {
             try
             {
-                if (ImportManifest.Imports.Count == 0)
-                {
-                    Debug.Log("Nothing to import...");
-                    return;
-                }
-
-                Debug.Log("importing.");
-                var trueImports = ImportManifest.Imports;
-                List<Node> nodesToWrite = new List<Node>();
-                foreach (var import in trueImports)
-                {
-                    if (!import.Key.IsSelected)
-                        continue;
-                    var nodes = CollectNodesToWriteOut(import.Key);
-                    nodesToWrite.AddRange(nodes);
-                }
-
-                int totalNodes = nodesToWrite.Count;
-                int index = 0;
-                var writeQueue = new Queue<Node>(nodesToWrite);
-                var uniqueWrites = new HashSet<Node>();
-                while (writeQueue.TryDequeue(out var node))
-                {
-                    if (uniqueWrites.Contains(node))
-                        continue;
-                    _importLabel.text = $"Importing: {index} / {totalNodes}";
-                    await node.WriteOut(_rootImportPath);
-                    uniqueWrites.Add(node);
-                    index++;
-                }
-
-                uniqueWrites = null;
-                _onFinishedImport?.Invoke();
-                return;
-
-                List<Node> CollectNodesToWriteOut(SelectableNode rootNoteToWrite)
-                {
-                    var selectedNodeQueue = new Queue<SelectableNode>();
-                    selectedNodeQueue.Enqueue(rootNoteToWrite);
-                    var nodesToWriteOut = new List<Node>();
-                    var nonExpandedNodes = new Queue<Node>();
-                    // collect all expanded and selected assets
-                    while (selectedNodeQueue.TryDequeue(out var node))
-                    {
-                        if (!node.IsSelected)
-                            continue;
-
-                        nodesToWriteOut.Add(node.Node);
-                        if (node.IsLeaf)
-                            continue;
-
-                        if (node.IsExpanded)
-                            foreach (var childNode in node.ChildrenNodes)
-                                selectedNodeQueue.Enqueue(childNode);
-                        else
-                        {
-                            foreach (var childNode in node.Node.Children)
-                                nonExpandedNodes.Enqueue(childNode);
-                        }
-                    }
-
-                    while (nonExpandedNodes.TryDequeue(out var node))
-                    {
-                        nodesToWriteOut.Add(node);
-                        if (node.IsLeaf || !node.HasChildren)
-                            continue;
-                        foreach (var child in node.Children)
-                            nonExpandedNodes.Enqueue(child);
-                    }
-
-                    return nodesToWriteOut;
-                }
+                await _unityPackage.Import(_rootImportPath, _importManifest,
+                    importLabelText => { _importLabel.text = importLabelText; });
             }
             catch (Exception e)
             {

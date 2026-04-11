@@ -14,7 +14,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
 
         protected override BaseUiNode CreateNode(Node node)
         {
-            return node.IsLeaf ? null : new DestinationUiNode(node, Depth + 1, this);
+            return UiNodeFactory.CreateDestinationUiNode(node, Depth + 1, this);
         }
     }
 }
