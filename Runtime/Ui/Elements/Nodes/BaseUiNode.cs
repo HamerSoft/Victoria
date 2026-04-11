@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace HamerSoft.Victoria.Ui.Elements.Nodes
 {
-    public abstract class BaseUiNode : VisualElement
+    internal abstract class BaseUiNode : VisualElement
     {
         private const int UI_NODE_HEADER_HEIGHT = 20;
         private readonly VisualElement _contentContainer;
@@ -31,7 +31,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
 
         internal static event Action<BaseUiNode, Node> Focussed;
 
-        public BaseUiNode(Node node, int depth, BaseUiNode parentNode)
+        protected BaseUiNode(Node node, int depth, BaseUiNode parentNode)
         {
             name = node.Name;
             focusable = true;
@@ -39,7 +39,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
             Node = node;
             Depth = OriginalDepth = depth;
             style.flexDirection = new StyleEnum<FlexDirection>(FlexDirection.Column);
-            DepthMultiplier = 2;
+
             style.marginLeft = Depth * DepthMultiplier;
 
             Header = new VisualElement
@@ -79,7 +79,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
             var focusColor = new Color(0.235f, 0.55f, 1f, 0.25f); // Soft blue, 25% opacity
 
             Header.style.backgroundColor = normalColor;
-            RegisterCallback<FocusEvent>(OnFocus(focusColor));
+            RegisterCallback(OnFocus(focusColor));
             RegisterCallback<BlurEvent>(_ => { Header.style.backgroundColor = normalColor; });
 
             RegisterCallback<PointerEnterEvent>(_ =>

@@ -53,7 +53,7 @@ namespace HamerSoft.Victoria.Ui.Elements
             splitView.Add(_packageOverView = new PackageOverview(unityPackage));
         }
 
-        public void Add(BaseUiNode uiNode)
+        void IDragParent.Add(BaseUiNode uiNode)
         {
             Add((VisualElement)uiNode);
         }

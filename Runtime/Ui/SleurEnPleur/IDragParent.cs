@@ -4,6 +4,6 @@ namespace HamerSoft.Victoria.Ui.SleurEnPleur
 {
     internal interface IDragParent
     {
-        public void Add(BaseUiNode uiNode);
+        internal void Add(BaseUiNode uiNode);
     }
 }

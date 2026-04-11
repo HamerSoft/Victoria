@@ -2,7 +2,7 @@ using HamerSoft.Victoria.Core.Extractor.Nodes;
 
 namespace HamerSoft.Victoria.Ui.Elements.Nodes
 {
-    public class DestinationUiNode : BaseUiNode
+    internal class DestinationUiNode : BaseUiNode
     {
         protected override int DepthMultiplier => 4;
 

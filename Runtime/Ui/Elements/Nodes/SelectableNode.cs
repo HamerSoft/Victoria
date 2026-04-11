@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace HamerSoft.Victoria.Ui.Elements.Nodes
 {
-    public class SelectableNode : BaseUiNode
+    internal class SelectableNode : BaseUiNode
     {
         private readonly Toggle _toggle;
         private bool _isSelected;
