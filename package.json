@@ -20,5 +20,8 @@
     "email": "r.hamers@hamersoft.com",
     "url": "https://hamersoft.com"
   },
-  "type": "library"
+  "type": "library",
+  "dependencies": {
+    "com.unity.test-framework": "1.4.6"
+  }
 }

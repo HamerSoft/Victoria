@@ -101,7 +101,15 @@ namespace HamerSoft.Victoria.Loader
                 return texture;
             }
 
-            Object.Destroy(texture);
+            if (Application.isEditor && Application.isPlaying)
+            {
+                Object.Destroy(texture);
+            }
+            else
+            {
+                Object.DestroyImmediate(texture);
+            }
+
             return null;
         }
     }

@@ -71,7 +71,17 @@ namespace HamerSoft.Victoria
         {
             foreach (var item in _cache)
                 if (item.Value is UnityEngine.Object unityObject)
-                    UnityEngine.Object.Destroy(unityObject);
+                {
+                    if (Application.isEditor && Application.isPlaying)
+                    {
+                        UnityEngine.Object.Destroy(unityObject);
+                    }
+                    else
+                    {
+                        UnityEngine.Object.DestroyImmediate(unityObject);
+                    }
+                }
+
             _cache.Clear();
             AudioSource?.Dispose();
         }
