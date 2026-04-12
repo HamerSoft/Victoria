@@ -133,6 +133,8 @@ namespace HamerSoft.Victoria.Core.Extractor
 
         private static void AddAssetToFolder(Asset asset, Folder root)
         {
+            if (string.IsNullOrWhiteSpace(asset.Identifier))
+                return;
             var assetPath = asset.Path.Split(Path.DirectorySeparatorChar);
             var currentDirectory = root;
             foreach (var part in assetPath)
