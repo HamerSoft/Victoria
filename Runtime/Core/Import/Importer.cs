@@ -62,7 +62,7 @@ namespace HamerSoft.Victoria.Core.Import
             onUpdate?.Invoke("Import Complete!");
         }
 
-        private List<Node> CollectNodesToWriteOut(SelectableNode rootNoteToWrite)
+        internal List<Node> CollectNodesToWriteOut(SelectableNode rootNoteToWrite)
         {
             var selectedNodeQueue = new Queue<SelectableNode>();
             selectedNodeQueue.Enqueue(rootNoteToWrite);
