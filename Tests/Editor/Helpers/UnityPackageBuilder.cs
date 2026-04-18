@@ -56,7 +56,12 @@ namespace HamerSoft.Victoria.Tests.Editor.Helpers
         /// <summary>
         /// Writes the package to a temp file and returns a FileInfo pointing to it.
         /// </summary>
-        internal FileInfo Build()
+        /// <param name="terminatorBlocks">
+        /// Number of 512-byte all-zero blocks to write at the end of the archive.
+        /// The POSIX tar standard requires two; the Extractor stops on the first.
+        /// Defaults to 1 (single block, matching real Unity packages).
+        /// </param>
+        internal FileInfo Build(int terminatorBlocks = 1)
         {
             var tempPath = Path.Combine(Path.GetTempPath(), _filename);
 
@@ -99,8 +104,10 @@ namespace HamerSoft.Victoria.Tests.Editor.Helpers
                     }
                 }
 
-                // Terminating zero block — Extractor breaks on this
-                gzip.Write(new byte[512], 0, 512);
+                // Terminating zero block(s) — Extractor breaks on the first all-zero block
+                var zeroBlock = new byte[512];
+                for (int i = 0; i < terminatorBlocks; i++)
+                    gzip.Write(zeroBlock, 0, 512);
             }
 
             return new FileInfo(tempPath);

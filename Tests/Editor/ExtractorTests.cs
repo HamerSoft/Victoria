@@ -314,6 +314,38 @@ namespace HamerSoft.Victoria.Tests.Editor
         }
 
         // -----------------------------------------------------------------------
+        // Zero-block termination (4.6)
+        // -----------------------------------------------------------------------
+
+        [Test]
+        public void Parse_DoubleZeroBlockTerminator_DoesNotThrow()
+        {
+            // POSIX tar requires two consecutive zero blocks. The Extractor stops on
+            // the first, so the second must be silently ignored rather than misread
+            // as a header.
+            _packageFile = new UnityPackageBuilder()
+                .AddAsset("Scripts/MyScript.cs")
+                .Build(terminatorBlocks: 2);
+
+            Assert.DoesNotThrow(() => Extractor.Parse(_packageFile));
+        }
+
+        [Test]
+        public void Parse_DoubleZeroBlockTerminator_LastAssetIsIncluded()
+        {
+            // Verifies that the asset immediately before the terminator is added to
+            // the tree by the post-loop AddAssetToFolder call.
+            _packageFile = new UnityPackageBuilder()
+                .AddAsset("Scripts/MyScript.cs")
+                .Build(terminatorBlocks: 2);
+
+            var root = Extractor.Parse(_packageFile);
+
+            root.TryGetChild("Scripts", out var scripts);
+            Assert.IsNotNull(FindAsset(scripts, "MyScript"));
+        }
+
+        // -----------------------------------------------------------------------
         // Path resolution after parsing
         // -----------------------------------------------------------------------
 
