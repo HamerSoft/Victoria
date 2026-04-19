@@ -6,10 +6,6 @@ namespace HamerSoft.Victoria.Tests.Editor
     [TestFixture]
     public class FolderTests
     {
-        // -----------------------------------------------------------------------
-        // Construction
-        // -----------------------------------------------------------------------
-
         [Test]
         public void Constructor_SetsName()
         {
@@ -30,10 +26,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             var folder = new Folder("Scripts");
             Assert.AreEqual(0, folder.Children.Count);
         }
-
-        // -----------------------------------------------------------------------
-        // IsLeaf / HasChildren
-        // -----------------------------------------------------------------------
 
         [Test]
         public void IsLeaf_IsAlwaysFalse()
@@ -65,10 +57,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.IsTrue(parent.HasChildren);
         }
 
-        // -----------------------------------------------------------------------
-        // DetailedName / FullPath / ToString
-        // -----------------------------------------------------------------------
-
         [Test]
         public void DetailedName_ReturnsName()
         {
@@ -89,10 +77,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             var folder = new Folder("Scripts");
             Assert.AreEqual("Scripts", folder.ToString());
         }
-
-        // -----------------------------------------------------------------------
-        // AddChild — parent assignment and path resolution
-        // -----------------------------------------------------------------------
 
         [Test]
         public void AddChild_Folder_SetsParent()
@@ -150,10 +134,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(2, parent.Children.Count);
         }
 
-        // -----------------------------------------------------------------------
-        // AddChild — HashSet deduplication (same name, same type)
-        // -----------------------------------------------------------------------
-
         [Test]
         public void AddChild_DuplicateFolderName_IsIgnored()
         {
@@ -181,10 +161,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             parent.AddChild(new Asset { Name = "Shared", ContentType = ".cs" });
             Assert.AreEqual(2, parent.Children.Count);
         }
-
-        // -----------------------------------------------------------------------
-        // TryGetChild
-        // -----------------------------------------------------------------------
 
         [Test]
         public void TryGetChild_ExistingFolder_ReturnsTrueAndFolder()
@@ -223,8 +199,6 @@ namespace HamerSoft.Victoria.Tests.Editor
         [Test]
         public void TryGetChild_NameExistsAsAssetNotFolder_ReturnsFalse()
         {
-            // TryGetChild only returns Folder nodes; an Asset with the same name
-            // should not be returned.
             var parent = new Folder("Parent");
             parent.AddChild(new Asset { Name = "Scripts", ContentType = ".cs" });
 

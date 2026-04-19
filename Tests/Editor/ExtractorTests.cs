@@ -20,16 +20,8 @@ namespace HamerSoft.Victoria.Tests.Editor
                 _packageFile.Delete();
         }
 
-        // -----------------------------------------------------------------------
-        // Helpers
-        // -----------------------------------------------------------------------
-
         private static Asset FindAsset(Folder folder, string name)
             => folder.Children.OfType<Asset>().FirstOrDefault(a => a.Name == name);
-
-        // -----------------------------------------------------------------------
-        // Root folder
-        // -----------------------------------------------------------------------
 
         [Test]
         public void Parse_RootFolderName_MatchesPackageFilename()
@@ -53,10 +45,6 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             Assert.IsFalse(root.HasChildren);
         }
-
-        // -----------------------------------------------------------------------
-        // Single asset — name, content type, file content, meta
-        // -----------------------------------------------------------------------
 
         [Test]
         public void Parse_SingleAsset_ReturnsCorrectName()
@@ -144,10 +132,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.IsNull(asset.MetaFile);
         }
 
-        // -----------------------------------------------------------------------
-        // Preview
-        // -----------------------------------------------------------------------
-
         [Test]
         public void Parse_AssetWithPreview_ReturnsPreviewContent()
         {
@@ -195,10 +179,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.IsNull(asset.PreviewContent);
         }
 
-        // -----------------------------------------------------------------------
-        // Folder hierarchy
-        // -----------------------------------------------------------------------
-
         [Test]
         public void Parse_TopLevelAsset_AddedDirectlyToRoot()
         {
@@ -245,8 +225,7 @@ namespace HamerSoft.Victoria.Tests.Editor
         [Test]
         public void Parse_ComDotPrefixedSegment_TreatedAsFolder()
         {
-            // "com.example" has an extension-like dot, but starts with "com."
-            // so AddAssetToFolder treats it as a folder, not an asset.
+            // "com.example" has an extension-like dot but is treated as a folder, not an asset
             _packageFile = new UnityPackageBuilder()
                 .AddAsset("com.example/Scripts/MyScript.cs")
                 .Build();
@@ -275,10 +254,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.IsNotNull(FindAsset(scripts, "ScriptA"));
             Assert.IsNotNull(FindAsset(scripts, "ScriptB"));
         }
-
-        // -----------------------------------------------------------------------
-        // Multi-asset package
-        // -----------------------------------------------------------------------
 
         [Test]
         public void Parse_MultipleAssets_AllPresent()
@@ -313,16 +288,11 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(2, scripts.Children.Count);
         }
 
-        // -----------------------------------------------------------------------
-        // Zero-block termination (4.6)
-        // -----------------------------------------------------------------------
-
         [Test]
         public void Parse_DoubleZeroBlockTerminator_DoesNotThrow()
         {
             // POSIX tar requires two consecutive zero blocks. The Extractor stops on
-            // the first, so the second must be silently ignored rather than misread
-            // as a header.
+            // the first, so the second must be silently ignored rather than misread as a header.
             _packageFile = new UnityPackageBuilder()
                 .AddAsset("Scripts/MyScript.cs")
                 .Build(terminatorBlocks: 2);
@@ -333,8 +303,6 @@ namespace HamerSoft.Victoria.Tests.Editor
         [Test]
         public void Parse_DoubleZeroBlockTerminator_LastAssetIsIncluded()
         {
-            // Verifies that the asset immediately before the terminator is added to
-            // the tree by the post-loop AddAssetToFolder call.
             _packageFile = new UnityPackageBuilder()
                 .AddAsset("Scripts/MyScript.cs")
                 .Build(terminatorBlocks: 2);
@@ -345,15 +313,9 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.IsNotNull(FindAsset(scripts, "MyScript"));
         }
 
-        // -----------------------------------------------------------------------
-        // Path resolution after parsing
-        // -----------------------------------------------------------------------
-
         [Test]
         public void Parse_Asset_PathResolvedIncludingRootFolder()
         {
-            // After AddAssetToFolder, ResolvePath rebuilds the path from the
-            // parent chain — so Path includes the root folder name.
             _packageFile = new UnityPackageBuilder("mypackage.unitypackage")
                 .AddAsset("Scripts/MyScript.cs")
                 .Build();

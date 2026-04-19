@@ -6,10 +6,6 @@ namespace HamerSoft.Victoria.Tests.Editor
     [TestFixture]
     public class AssetTests
     {
-        // -----------------------------------------------------------------------
-        // GetPreviewType — plain text extensions
-        // -----------------------------------------------------------------------
-
         [TestCase(".cs")]
         [TestCase(".json")]
         [TestCase(".meta")]
@@ -25,10 +21,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(Asset.Preview.PlainText, asset.GetPreviewType());
         }
 
-        // -----------------------------------------------------------------------
-        // GetPreviewType — audio extensions
-        // -----------------------------------------------------------------------
-
         [TestCase(".mp3")]
         [TestCase(".wav")]
         [TestCase(".ogg")]
@@ -37,10 +29,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             var asset = new Asset { ContentType = extension };
             Assert.AreEqual(Asset.Preview.Audio, asset.GetPreviewType());
         }
-
-        // -----------------------------------------------------------------------
-        // GetPreviewType — image preview types
-        // -----------------------------------------------------------------------
 
         [TestCase(".png")]
         [TestCase(".jpg")]
@@ -60,10 +48,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(Asset.Preview.Image, asset.GetPreviewType());
         }
 
-        // -----------------------------------------------------------------------
-        // GetPreviewType — model preview types
-        // -----------------------------------------------------------------------
-
         [TestCase(".fbx")]
         [TestCase(".dae")]
         [TestCase(".3ds")]
@@ -82,10 +66,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             var asset = new Asset { ContentType = ".png", PreviewType = previewType };
             Assert.AreEqual(Asset.Preview.Model, asset.GetPreviewType());
         }
-
-        // -----------------------------------------------------------------------
-        // GetPreviewType — unknown / fallback cases
-        // -----------------------------------------------------------------------
 
         [Test]
         public void GetPreviewType_UnknownContentTypeAndNullPreviewType_ReturnsNotAvailable()
@@ -108,14 +88,10 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(Asset.Preview.NotAvailable, asset.GetPreviewType());
         }
 
-        // -----------------------------------------------------------------------
-        // GetPreviewType — ContentType takes priority over PreviewType for text/audio
-        // -----------------------------------------------------------------------
-
         [Test]
         public void GetPreviewType_PlainTextContentTypeWithImagePreviewType_ReturnsPlainText()
         {
-            // ContentType match wins — PreviewType is irrelevant for text types
+            // ContentType match wins — PreviewType is irrelevant for text/audio types
             var asset = new Asset { ContentType = ".cs", PreviewType = ".png" };
             Assert.AreEqual(Asset.Preview.PlainText, asset.GetPreviewType());
         }
@@ -126,10 +102,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             var asset = new Asset { ContentType = ".mp3", PreviewType = ".fbx" };
             Assert.AreEqual(Asset.Preview.Audio, asset.GetPreviewType());
         }
-
-        // -----------------------------------------------------------------------
-        // Size
-        // -----------------------------------------------------------------------
 
         [Test]
         public void Size_ReturnsFileContentLength()
@@ -145,20 +117,12 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(0, asset.Size);
         }
 
-        // -----------------------------------------------------------------------
-        // IsLeaf
-        // -----------------------------------------------------------------------
-
         [Test]
         public void IsLeaf_IsAlwaysTrue()
         {
             var asset = new Asset();
             Assert.IsTrue(asset.IsLeaf);
         }
-
-        // -----------------------------------------------------------------------
-        // DetailedName
-        // -----------------------------------------------------------------------
 
         [Test]
         public void DetailedName_ReturnsConcatenationOfNameAndContentType()
@@ -174,25 +138,14 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual("MyScript", asset.DetailedName);
         }
 
-        // -----------------------------------------------------------------------
-        // FullPath
-        // -----------------------------------------------------------------------
-
         [Test]
         public void FullPath_ReturnsConcatenationOfPathAndContentType()
         {
             var asset = new Asset { Name = "MyScript", ContentType = ".cs" };
-            // Setting Parent on a Folder resolves Path; here we set Name directly
-            // and verify FullPath = Path + ContentType. A root asset with no parent
-            // gets Path == Name via ResolvePath.
             var root = new Folder("Root");
             root.AddChild(asset);
             Assert.AreEqual("Root/MyScript.cs", asset.FullPath);
         }
-
-        // -----------------------------------------------------------------------
-        // ToString
-        // -----------------------------------------------------------------------
 
         [Test]
         public void ToString_ReturnsName()

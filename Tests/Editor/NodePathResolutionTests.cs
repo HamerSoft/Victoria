@@ -3,18 +3,9 @@ using NUnit.Framework;
 
 namespace HamerSoft.Victoria.Tests.Editor
 {
-    /// <summary>
-    /// Tests for Node.ResolvePath — the recursive path-building logic triggered
-    /// whenever a node's Parent is assigned. Tested via concrete subclasses
-    /// Folder and Asset since Node is abstract.
-    /// </summary>
     [TestFixture]
     public class NodePathResolutionTests
     {
-        // -----------------------------------------------------------------------
-        // Root node (no parent)
-        // -----------------------------------------------------------------------
-
         [Test]
         public void RootFolder_PathEqualsName()
         {
@@ -28,10 +19,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             var root = new Folder("");
             Assert.AreEqual("", root.Path);
         }
-
-        // -----------------------------------------------------------------------
-        // Single-level parent
-        // -----------------------------------------------------------------------
 
         [Test]
         public void AddChild_Folder_PathIsParentSlashChild()
@@ -59,10 +46,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual("Parent", parent.Path);
         }
 
-        // -----------------------------------------------------------------------
-        // Deep hierarchy
-        // -----------------------------------------------------------------------
-
         [Test]
         public void ThreeLevels_Folder_PathIncludesAllAncestors()
         {
@@ -86,7 +69,7 @@ namespace HamerSoft.Victoria.Tests.Editor
         }
 
         [Test]
-        public void FourLevels_PathBuildsCorrectly()
+        public void FourLevels_PathIncludesAllAncestors()
         {
             var a = new Folder("A");
             var b = new Folder("B");
@@ -97,10 +80,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             c.AddChild(d);
             Assert.AreEqual("A/B/C/D", d.Path);
         }
-
-        // -----------------------------------------------------------------------
-        // Sibling paths are independent
-        // -----------------------------------------------------------------------
 
         [Test]
         public void Siblings_HaveIndependentPaths()
@@ -114,20 +93,14 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual("Parent/B", b.Path);
         }
 
-        // -----------------------------------------------------------------------
-        // Recursive re-pathing when parent is assigned
-        // -----------------------------------------------------------------------
-
         [Test]
         public void AddChildWithExistingDescendants_RePathsAllDescendants()
         {
-            // Build a subtree first, then attach it to a parent.
-            // All nodes in the subtree must be re-pathed.
             var root = new Folder("Root");
             var middle = new Folder("Middle");
             var leaf = new Folder("Leaf");
-            middle.AddChild(leaf);         // leaf.Path == "Middle/Leaf" at this point
-            root.AddChild(middle);         // should re-path both middle and leaf
+            middle.AddChild(leaf);
+            root.AddChild(middle);
 
             Assert.AreEqual("Root/Middle", middle.Path);
             Assert.AreEqual("Root/Middle/Leaf", leaf.Path);
@@ -157,22 +130,15 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual("P1/Child", child.Path);
             Assert.AreEqual("P1/Child/Grandchild", grandchild.Path);
 
-            // Re-parent child to p2
             child.Parent = p2;
 
             Assert.AreEqual("P2/Child", child.Path);
             Assert.AreEqual("P2/Child/Grandchild", grandchild.Path);
         }
 
-        // -----------------------------------------------------------------------
-        // Path stops at a node with an empty name
-        // -----------------------------------------------------------------------
-
         [Test]
         public void ParentWithEmptyName_IsNotIncludedInPath()
         {
-            // A Folder with an empty name acts as an anonymous root —
-            // ResolvePath stops walking up when it hits an empty name.
             var anonymousRoot = new Folder("");
             var child = new Folder("Child");
             anonymousRoot.AddChild(child);
@@ -190,10 +156,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual("Middle", middle.Path);
             Assert.AreEqual("Middle/Leaf", leaf.Path);
         }
-
-        // -----------------------------------------------------------------------
-        // FullPath on Folder and Asset after path resolution
-        // -----------------------------------------------------------------------
 
         [Test]
         public void Folder_FullPath_MatchesPath()

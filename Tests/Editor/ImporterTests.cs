@@ -13,10 +13,6 @@ namespace HamerSoft.Victoria.Tests.Editor
     [TestFixture]
     public class ImporterTests
     {
-        // -----------------------------------------------------------------------
-        // Reflection accessors — set private UI state without a panel
-        // -----------------------------------------------------------------------
-
         private static readonly FieldInfo IsSelectedField =
             typeof(SelectableNode).GetField("_isSelected", BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -38,10 +34,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             list.Add(child);
         }
 
-        // -----------------------------------------------------------------------
-        // Helpers
-        // -----------------------------------------------------------------------
-
         private static Asset MakeAsset(string name = "MyAsset", string ext = ".cs") =>
             new Asset { Name = name, ContentType = ext, FileContent = new byte[0] };
 
@@ -50,10 +42,6 @@ namespace HamerSoft.Victoria.Tests.Editor
 
         private static Importer MakeImporter(ImportManifest manifest = null) =>
             new Importer("", manifest ?? new ImportManifest());
-
-        // -----------------------------------------------------------------------
-        // 8.1 — Selected leaf returns exactly that node
-        // -----------------------------------------------------------------------
 
         [Test]
         public void CollectNodes_SelectedLeaf_ReturnsExactlyThatNode()
@@ -67,10 +55,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreSame(asset, result[0]);
         }
 
-        // -----------------------------------------------------------------------
-        // 8.2 — Deselected leaf returns empty list
-        // -----------------------------------------------------------------------
-
         [Test]
         public void CollectNodes_DeselectedLeaf_ReturnsEmptyList()
         {
@@ -82,10 +66,6 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             Assert.IsEmpty(result);
         }
-
-        // -----------------------------------------------------------------------
-        // 8.3 — Selected expanded folder with all children selected
-        // -----------------------------------------------------------------------
 
         [Test]
         public void CollectNodes_SelectedExpandedFolderAllChildrenSelected_ReturnsFolderAndAllChildren()
@@ -111,10 +91,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             CollectionAssert.Contains(result, child2);
         }
 
-        // -----------------------------------------------------------------------
-        // 8.4 — Selected collapsed folder returns folder + all data children recursively
-        // -----------------------------------------------------------------------
-
         [Test]
         public void CollectNodes_SelectedCollapsedFolder_ReturnsAllDataChildrenRecursively()
         {
@@ -126,7 +102,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             folder.AddChild(child);
             folder.AddChild(subFolder);
 
-            // IsExpanded = false by default — data-side traversal applies
             var folderUiNode = MakeUiNode(folder);
 
             var result = MakeImporter().CollectNodesToWriteOut(folderUiNode);
@@ -137,10 +112,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             CollectionAssert.Contains(result, subFolder);
             CollectionAssert.Contains(result, grandChild);
         }
-
-        // -----------------------------------------------------------------------
-        // 8.5 — Partially selected children: only selected ones are included
-        // -----------------------------------------------------------------------
 
         [Test]
         public void CollectNodes_PartiallySelectedChildren_ExcludesDeselectedChildren()
@@ -166,10 +137,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             CollectionAssert.Contains(result, selected);
             CollectionAssert.DoesNotContain(result, deselected);
         }
-
-        // -----------------------------------------------------------------------
-        // 8.6 — Deduplication: same underlying Node in two manifest entries is written once
-        // -----------------------------------------------------------------------
 
         [Test]
         public void Import_SameNodeInTwoManifestEntries_WritesFileOnlyOnce()
@@ -199,21 +166,17 @@ namespace HamerSoft.Victoria.Tests.Editor
             }
         }
 
-        // -----------------------------------------------------------------------
-        // 8.7 — Mixed expanded and collapsed subtrees
-        // -----------------------------------------------------------------------
-
         [Test]
         public void CollectNodes_MixedExpandedAndCollapsedSubtrees_CollectsBothPathsCorrectly()
         {
             var root = new Folder("Root");
-            var folderA = new Folder("FolderA"); // will be collapsed in UI
+            var folderA = new Folder("FolderA");
             var assetA1 = MakeAsset("A1");
             var assetA2 = MakeAsset("A2");
             folderA.AddChild(assetA1);
             folderA.AddChild(assetA2);
 
-            var folderB = new Folder("FolderB"); // will be expanded in UI
+            var folderB = new Folder("FolderB");
             var assetB1 = MakeAsset("B1");
             var assetB2 = MakeAsset("B2");
             folderB.AddChild(assetB1);
@@ -223,8 +186,8 @@ namespace HamerSoft.Victoria.Tests.Editor
             root.AddChild(folderB);
 
             var rootUiNode = MakeUiNode(root);
-            var folderAUiNode = MakeUiNode(folderA, rootUiNode); // collapsed (default)
-            var folderBUiNode = MakeUiNode(folderB, rootUiNode); // expanded
+            var folderAUiNode = MakeUiNode(folderA, rootUiNode);
+            var folderBUiNode = MakeUiNode(folderB, rootUiNode);
             var assetB1UiNode = MakeUiNode(assetB1, folderBUiNode);
             var assetB2UiNode = MakeUiNode(assetB2, folderBUiNode);
 
@@ -234,11 +197,9 @@ namespace HamerSoft.Victoria.Tests.Editor
             SetIsExpanded(folderBUiNode, true);
             AddChildUiNode(folderBUiNode, assetB1UiNode);
             AddChildUiNode(folderBUiNode, assetB2UiNode);
-            // folderA stays collapsed — data traversal collects assetA1 + assetA2
 
             var result = MakeImporter().CollectNodesToWriteOut(rootUiNode);
 
-            // root + folderA + assetA1 + assetA2 (data) + folderB + assetB1 + assetB2 (UI)
             Assert.AreEqual(7, result.Count);
             CollectionAssert.Contains(result, root);
             CollectionAssert.Contains(result, folderA);

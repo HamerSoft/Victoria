@@ -13,10 +13,6 @@ namespace HamerSoft.Victoria.Tests.Editor
     [TestFixture]
     public class UnityPackageTests
     {
-        // -----------------------------------------------------------------------
-        // Fakes
-        // -----------------------------------------------------------------------
-
         private class FakeObjectLoader : IObjectLoader
         {
             public int CallCount { get; private set; }
@@ -44,18 +40,10 @@ namespace HamerSoft.Victoria.Tests.Editor
             public void Dispose() { }
         }
 
-        // -----------------------------------------------------------------------
-        // Helpers
-        // -----------------------------------------------------------------------
-
         private static UnityPackage MakePackage(IObjectLoader loader, string rootName = "Root") =>
             new UnityPackage(new Folder(rootName), loader, new NullSearch(), new NullAudioSource());
 
         private static readonly byte[] SomeData = { 1, 2, 3 };
-
-        // -----------------------------------------------------------------------
-        // 7.1 — Cache miss on first load invokes the loader exactly once
-        // -----------------------------------------------------------------------
 
         [Test]
         public async Task LoadObject_FirstCall_InvokesLoaderOnce()
@@ -67,10 +55,6 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             Assert.AreEqual(1, loader.CallCount);
         }
-
-        // -----------------------------------------------------------------------
-        // 7.2 — Cache hit on second identical request — loader is not called again
-        // -----------------------------------------------------------------------
 
         [Test]
         public async Task LoadObject_SecondCallSameIdAndType_ReturnsCachedValue()
@@ -85,10 +69,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual("cached", result);
         }
 
-        // -----------------------------------------------------------------------
-        // 7.3 — Null result is not cached — loader is called again on the next request
-        // -----------------------------------------------------------------------
-
         [Test]
         public async Task LoadObject_NullResult_IsNotCached()
         {
@@ -100,11 +80,6 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             Assert.AreEqual(2, loader.CallCount);
         }
-
-        // -----------------------------------------------------------------------
-        // 7.4 — Different type keys are independent — PlainText cache entry for id X
-        //        does not satisfy an Image request for id X
-        // -----------------------------------------------------------------------
 
         [Test]
         public async Task LoadObject_DifferentTypesSameId_CacheKeysAreIndependent()
@@ -118,10 +93,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(2, loader.CallCount);
         }
 
-        // -----------------------------------------------------------------------
-        // 7.5 — Dispose clears the cache — next request is a cache miss
-        // -----------------------------------------------------------------------
-
         [Test]
         public async Task LoadObject_AfterDispose_CacheIsCleared()
         {
@@ -134,10 +105,6 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             Assert.AreEqual(2, loader.CallCount);
         }
-
-        // -----------------------------------------------------------------------
-        // 7.6 — Name returns the root Folder.Name passed at construction
-        // -----------------------------------------------------------------------
 
         [Test]
         public void Name_ReturnsRootFolderName()

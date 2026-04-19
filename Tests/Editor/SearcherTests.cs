@@ -9,11 +9,6 @@ namespace HamerSoft.Victoria.Tests.Editor
     [TestFixture]
     public class SearcherTests
     {
-        // -----------------------------------------------------------------------
-        // Helpers
-        // -----------------------------------------------------------------------
-
-        /// <summary>Builds a root Folder and wires up a Searcher against it.</summary>
         private static (Folder root, Searcher searcher) MakeTree()
         {
             var root = new Folder("Root");
@@ -22,10 +17,6 @@ namespace HamerSoft.Victoria.Tests.Editor
 
         private static Asset MakeAsset(string name, string extension)
             => new Asset { Name = name, ContentType = extension, FileContent = new byte[0] };
-
-        // -----------------------------------------------------------------------
-        // 5.1 — Exact name match
-        // -----------------------------------------------------------------------
 
         [Test]
         public void SearchByName_ExactNameMatch_ReturnsMatchingNode()
@@ -39,10 +30,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(1, results.Count);
             Assert.AreSame(asset, results[0]);
         }
-
-        // -----------------------------------------------------------------------
-        // 5.2 — Substring match
-        // -----------------------------------------------------------------------
 
         [Test]
         public void SearchByName_SubstringMatch_ReturnsMatchingNodes()
@@ -61,10 +48,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             CollectionAssert.Contains(results, a);
             CollectionAssert.Contains(results, b);
         }
-
-        // -----------------------------------------------------------------------
-        // 5.3 — Case-insensitive match
-        // -----------------------------------------------------------------------
 
         [Test]
         public void SearchByName_CaseInsensitiveMatch_ReturnsNode()
@@ -92,10 +75,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreSame(asset, results[0]);
         }
 
-        // -----------------------------------------------------------------------
-        // 5.4 — No match
-        // -----------------------------------------------------------------------
-
         [Test]
         public void SearchByName_NoMatch_ReturnsEmptyCollection()
         {
@@ -106,10 +85,6 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             Assert.IsEmpty(results);
         }
-
-        // -----------------------------------------------------------------------
-        // 5.5 — Empty search term returns all nodes
-        // -----------------------------------------------------------------------
 
         [Test]
         public void SearchByName_EmptyTerm_ReturnsAllNodes()
@@ -126,17 +101,12 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var results = searcher.SearchByName("").ToList();
 
-            // Sub folder + a + b + c
             Assert.AreEqual(4, results.Count);
             CollectionAssert.Contains(results, a);
             CollectionAssert.Contains(results, b);
             CollectionAssert.Contains(results, sub);
             CollectionAssert.Contains(results, c);
         }
-
-        // -----------------------------------------------------------------------
-        // 5.6 — Nested match (depth > 1)
-        // -----------------------------------------------------------------------
 
         [Test]
         public void SearchByName_NestedAsset_IsFound()
@@ -170,10 +140,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreSame(deep, results[0]);
         }
 
-        // -----------------------------------------------------------------------
-        // 5.7 — Multiple matches
-        // -----------------------------------------------------------------------
-
         [Test]
         public void SearchByName_MultipleMatches_ReturnsAllMatchingNodes()
         {
@@ -196,10 +162,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             CollectionAssert.Contains(results, b);
             CollectionAssert.Contains(results, d);
         }
-
-        // -----------------------------------------------------------------------
-        // Additional edge cases
-        // -----------------------------------------------------------------------
 
         [Test]
         public void SearchByName_EmptyTree_ReturnsEmptyCollection()
