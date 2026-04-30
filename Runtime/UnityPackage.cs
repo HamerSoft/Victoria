@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using HamerSoft.Victoria.Core.Audio;
 using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
+using HamerSoft.Victoria.Core.Import;
 using HamerSoft.Victoria.Core.Search;
+using HamerSoft.Victoria.Loader;
 using HamerSoft.Victoria.Loader.Loader;
+using HamerSoft.Victoria.Ui;
+using UnityEngine;
 
 namespace HamerSoft.Victoria
 {
@@ -16,10 +22,10 @@ namespace HamerSoft.Victoria
         private readonly Dictionary<string, object> _cache;
         public readonly ISearch Search;
         public readonly string Name;
-        public Extractor.Folder Assets { get; }
+        public Folder Assets { get; }
         public IAudioSource AudioSource { get; }
 
-        public UnityPackage(Extractor.Folder assets, IObjectLoader loader, ISearch search, IAudioSource audioSource)
+        internal UnityPackage(Folder assets, IObjectLoader loader, ISearch search, IAudioSource audioSource)
         {
             Name = assets.Name;
             AudioSource = audioSource;
@@ -29,7 +35,7 @@ namespace HamerSoft.Victoria
             _cache = new Dictionary<string, object>(DEFAULT_CAPACITY);
         }
 
-        public async Task<T> LoadObject<T>(string id, byte[] data, Extractor.Asset.Preview type,
+        public async Task<T> LoadObject<T>(string id, byte[] data, Asset.Preview type,
             CancellationToken token)
         {
             id = GenerateId(id, type);
@@ -56,7 +62,7 @@ namespace HamerSoft.Victoria
             _cache.Add(id, cacheObject);
         }
 
-        private string GenerateId(string id, Extractor.Asset.Preview type)
+        private string GenerateId(string id, Asset.Preview type)
         {
             return $"{type.ToString()}-{id}";
         }
@@ -65,9 +71,45 @@ namespace HamerSoft.Victoria
         {
             foreach (var item in _cache)
                 if (item.Value is UnityEngine.Object unityObject)
-                    UnityEngine.Object.Destroy(unityObject);
+                {
+                    if (Application.isEditor && Application.isPlaying)
+                    {
+                        UnityEngine.Object.Destroy(unityObject);
+                    }
+                    else
+                    {
+                        UnityEngine.Object.DestroyImmediate(unityObject);
+                    }
+                }
+
             _cache.Clear();
             AudioSource?.Dispose();
+        }
+
+        internal async Task Import(string rootImportPath, ImportManifest importManifest, Action<string> onUpdate)
+        {
+            using var importer = new Importer(rootImportPath, importManifest);
+            await importer.Import(onUpdate);
+        }
+
+        public static UnityPackage LoadFromPath(FileInfo selectedPackage, IAudioSource audioSource)
+        {
+            try
+            {
+                var assets = Extractor.Parse(selectedPackage);
+                if (assets != null)
+                {
+                    return new UnityPackage(assets, new ObjectLoader(), new Searcher(assets),
+                        audioSource);
+                }
+
+                throw new FileLoadException("Failed to load package " + selectedPackage);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to load package {e}");
+                throw;
+            }
         }
     }
 }

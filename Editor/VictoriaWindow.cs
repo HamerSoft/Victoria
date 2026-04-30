@@ -28,7 +28,8 @@ namespace HamerSoft.Victoria.Editor
             {
                 if (_instance != null)
                     CloseWindow();
-                _instance = ShowVictoriaWindow(Extractor.Parse(new FileInfo(selectedPackage), new EditorAudioSource()));
+                var unityPackage = UnityPackage.LoadFromPath(new FileInfo(selectedPackage), new EditorAudioSource());
+                _instance = ShowVictoriaWindow(unityPackage);
             }
         }
 

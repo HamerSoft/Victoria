@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 using HamerSoft.Victoria.Loader.Loader;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -22,7 +22,7 @@ namespace HamerSoft.Victoria.Loader
                 Directory.CreateDirectory(_audioCachePath);
         }
 
-        public async Task<T> LoadObject<T>(string id, byte[] data, Extractor.Asset.Preview type,
+        public async Task<T> LoadObject<T>(string id, byte[] data, Asset.Preview type,
             CancellationToken token)
         {
             if (data is { Length: 0 })
@@ -30,9 +30,9 @@ namespace HamerSoft.Victoria.Loader
 
             return type switch
             {
-                Extractor.Asset.Preview.PlainText => (T)(object)await LoadPlainText(data, token),
-                Extractor.Asset.Preview.Image => (T)(object)LoadTexture(data),
-                Extractor.Asset.Preview.Audio => (T)(object)await LoadAudio(id, data, token),
+                Asset.Preview.PlainText => (T)(object)await LoadPlainText(data, token),
+                Asset.Preview.Image => (T)(object)LoadTexture(data),
+                Asset.Preview.Audio => (T)(object)await LoadAudio(id, data, token),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
@@ -101,7 +101,15 @@ namespace HamerSoft.Victoria.Loader
                 return texture;
             }
 
-            Object.Destroy(texture);
+            if (Application.isEditor && Application.isPlaying)
+            {
+                Object.Destroy(texture);
+            }
+            else
+            {
+                Object.DestroyImmediate(texture);
+            }
+
             return null;
         }
     }

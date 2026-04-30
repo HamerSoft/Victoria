@@ -1,20 +1,19 @@
 using System;
-using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
+using HamerSoft.Victoria.Core.Import;
 using UnityEngine.UIElements;
 
 namespace HamerSoft.Victoria.Ui.Elements
 {
     internal class DetailsElement : VisualElement
     {
-        private UnityPackage _unityPackage;
         private PreviewElement _previewer;
         private DestinationElement _destination;
 
-        public DetailsElement(UnityPackage unityPackage, Action onFinishedImport)
+        public DetailsElement(UnityPackage unityPackage, ImportManifest importManifest, Action onFinishedImport)
         {
-            _unityPackage = unityPackage;
             var verticalSplit = new TwoPaneSplitView(1, 200, TwoPaneSplitViewOrientation.Vertical);
-            CreateDestination(verticalSplit, unityPackage, onFinishedImport);
+            CreateDestination(verticalSplit, unityPackage, importManifest, onFinishedImport);
             CreatePreview(verticalSplit, unityPackage);
             Add(verticalSplit);
         }
@@ -24,12 +23,13 @@ namespace HamerSoft.Victoria.Ui.Elements
             splitView.Add(_previewer = new PreviewElement(unityPackage));
         }
 
-        private void CreateDestination(TwoPaneSplitView splitView, UnityPackage unityPackage, Action onFinishedImport)
+        private void CreateDestination(TwoPaneSplitView splitView, UnityPackage unityPackage,
+            ImportManifest importManifest, Action onFinishedImport)
         {
-            splitView.Add(_destination = new DestinationElement(unityPackage, onFinishedImport));
+            splitView.Add(_destination = new DestinationElement(unityPackage, importManifest, onFinishedImport));
         }
 
-        internal void SetNode(Extractor.Node node)
+        internal void SetNode(Node node)
         {
             _previewer.SetNode(node);
         }

@@ -1,22 +1,23 @@
 using System;
 using System.Collections.Generic;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 
 namespace HamerSoft.Victoria.Core.Search
 {
     public class Searcher : ISearch
     {
-        private readonly Extractor.Extractor.Folder _root;
+        private readonly Folder _root;
 
-        public Searcher(Extractor.Extractor.Folder root)
+        public Searcher(Folder root)
         {
             _root = root;
         }
 
         // Breadth first search is used
-        public IEnumerable<Extractor.Extractor.Node> SearchByName(string currentSearchTerm)
+        public IEnumerable<Node> SearchByName(string currentSearchTerm)
         {
-            List<Extractor.Extractor.Node> matches = new List<Extractor.Extractor.Node>(_root.Children.Count);
-            Queue<Extractor.Extractor.Node> scope = new Queue<Extractor.Extractor.Node>(_root.Children);
+            List<Node> matches = new List<Node>(_root.Children.Count);
+            Queue<Node> scope = new Queue<Node>(_root.Children);
             while (scope.TryDequeue(out var currentNode))
             {
                 if (currentNode.DetailedName.Contains(currentSearchTerm, StringComparison.InvariantCultureIgnoreCase))

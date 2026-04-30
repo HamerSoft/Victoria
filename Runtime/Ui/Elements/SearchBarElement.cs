@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using HamerSoft.Victoria.Core.Extractor;
+using HamerSoft.Victoria.Core.Extractor.Nodes;
 using HamerSoft.Victoria.Core.Search;
 using HamerSoft.Victoria.Ui.SleurEnPleur;
 using UnityEngine;
@@ -15,13 +16,13 @@ namespace HamerSoft.Victoria.Ui.Elements
         private class SearchResults : VisualElement
         {
             private readonly IList _matches;
-            private readonly Action<Extractor.Node> _selected;
-            private Action _close;
+            private readonly Action<Node> _selected;
+            private readonly Action _close;
 
             private class SearchLabel : VisualElement
             {
                 private readonly Label _label;
-                private Extractor.Node Node { get; set; }
+                private Node Node { get; set; }
 
                 public SearchLabel()
                 {
@@ -35,14 +36,14 @@ namespace HamerSoft.Victoria.Ui.Elements
                     RegisterCallback<PointerMoveEvent>(evt => { evt.StopPropagation(); });
                 }
 
-                public void SetContent(Extractor.Node node)
+                public void SetContent(Node node)
                 {
                     Node = node;
                     _label.text = Node.Name;
                 }
             }
 
-            public SearchResults(IList matches, Vector2 position, Action close, Action<Extractor.Node> selected)
+            public SearchResults(IList matches, Vector2 position, Action close, Action<Node> selected)
             {
                 _close = close;
                 _selected = selected;
@@ -117,7 +118,7 @@ namespace HamerSoft.Victoria.Ui.Elements
 
             private void ListViewOnSelectionChange(IEnumerable<object> selection)
             {
-                var selected = selection.First() as Extractor.Node;
+                var selected = selection.First() as Node;
                 Debug.LogWarning($"Selected = {selected.Name}");
                 _selected?.Invoke(selected);
                 _close?.Invoke();
@@ -131,7 +132,7 @@ namespace HamerSoft.Victoria.Ui.Elements
                     return;
                 }
 
-                searchLabel.SetContent(_matches[matchIndex] as Extractor.Node);
+                searchLabel.SetContent(_matches[matchIndex] as Node);
             }
 
             private VisualElement MakeItem()
@@ -144,11 +145,11 @@ namespace HamerSoft.Victoria.Ui.Elements
         private readonly Button _advancedSearch;
         private readonly VisualElement _popupParent;
         private readonly ISearch _search;
-        private readonly Action<Extractor.Node> _selected;
+        private readonly Action<Node> _selected;
         private string _currentSearchTerm;
         private SearchResults _searchResultsPopup;
 
-        public SearchBarElement(ISearch search, VisualElement popupParent, Action<Extractor.Node> selected)
+        public SearchBarElement(ISearch search, VisualElement popupParent, Action<Node> selected)
         {
             _selected = selected;
             _popupParent = popupParent;
@@ -188,7 +189,7 @@ namespace HamerSoft.Victoria.Ui.Elements
 
             var matches = _search.SearchByName(_currentSearchTerm);
             ClosePopup();
-            ShowSearchResults(new List<Extractor.Node>(matches));
+            ShowSearchResults(new List<Node>(matches));
         }
 
         private void ShowSearchResults(IList matches)
