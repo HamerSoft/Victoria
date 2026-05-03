@@ -30,8 +30,11 @@ namespace HamerSoft.Victoria.Core.Audio
 
         public void Stop()
         {
-            _audioSource.Stop();
-            _audioSource.clip = null;
+            if (_audioSource)
+            {
+                _audioSource.Stop();
+                _audioSource.clip = null;
+            }
         }
 
         public void Dispose()

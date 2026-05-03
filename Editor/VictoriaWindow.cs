@@ -1,5 +1,4 @@
 using System.IO;
-using HamerSoft.Victoria.Core.Extractor;
 using HamerSoft.Victoria.EditorAudio;
 using HamerSoft.Victoria.Ui.Elements;
 using UnityEditor;
@@ -61,13 +60,14 @@ namespace HamerSoft.Victoria.Editor
         {
             _unityPackage = unityPackage;
             _root = rootVisualElement;
-            _root.Add(_victoria = new VictoriaElement(_unityPackage, () =>
-            {
+            _root.Add(_victoria = new VictoriaElement(_unityPackage,
+                new DirectoryInfo(Path.Combine(Application.dataPath, "..")), () =>
+                {
 #if UNITY_EDITOR
-                AssetDatabase.Refresh();
+                    AssetDatabase.Refresh();
 #endif
-                CloseWindow();
-            }) { style = { flexGrow = 1 } });
+                    CloseWindow();
+                }) { style = { flexGrow = 1 } });
         }
     }
 }

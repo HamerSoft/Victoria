@@ -24,20 +24,19 @@ namespace HamerSoft.Victoria.Ui.Elements
         private FileSystemNode _destinationNode;
         private DestinationUiNode _rootNode;
         private ScrollView _scrollView;
-        private readonly string _rootImportPath;
         private Label _importLabel;
         private readonly Action _onFinishedImport;
         private ImportManifest _importManifest;
+        private DirectoryInfo _destinationDirectory;
 
-        public DestinationElement(UnityPackage unityPackage, ImportManifest importManifest, Action onFinishedImport)
+        public DestinationElement(UnityPackage unityPackage, ImportManifest importManifest, DirectoryInfo destination,
+            Action onFinishedImport)
         {
+            _destinationDirectory = destination;
             _importManifest = importManifest;
             _onFinishedImport = onFinishedImport;
             _unityPackage = unityPackage;
             name = "destination";
-            _rootImportPath = Application.isEditor
-                ? Path.Combine(Application.dataPath, "..")
-                : Application.dataPath;
 #pragma warning disable CS4014
             ShowLoading();
 #pragma warning restore CS4014
@@ -54,7 +53,7 @@ namespace HamerSoft.Victoria.Ui.Elements
                 }
             });
 
-            _destinationNode = await Task.Run(() => LoadFileSystemNode(_rootImportPath));
+            _destinationNode = await Task.Run(() => LoadFileSystemNode(_destinationDirectory.FullName));
             Clear();
             var header = new VisualElement
             {
@@ -107,7 +106,7 @@ namespace HamerSoft.Victoria.Ui.Elements
         {
             try
             {
-                await _unityPackage.Import(_rootImportPath, _importManifest,
+                await _unityPackage.Import(_destinationDirectory.FullName, _importManifest,
                     importLabelText => { _importLabel.text = importLabelText; });
             }
             catch (Exception e)
