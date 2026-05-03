@@ -141,7 +141,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
 
                     break;
                 case KeyCode.UpArrow:
-                    if (ParentUiNode == null) return;
+                    if (ParentUiNode == null) break;
                     indexInParent = ParentUiNode.ChildUiNodes.IndexOf(this);
                     if (indexInParent > 0)
                     {
@@ -190,6 +190,8 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
                 default:
                     return;
             }
+
+            keyDownEvent.StopPropagation();
         }
 
         internal void ExpandOrCollapse()

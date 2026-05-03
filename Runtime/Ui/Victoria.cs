@@ -67,6 +67,12 @@ namespace HamerSoft.Victoria.Ui
                     }
                 });
 
+                RegisterCallback<NavigationMoveEvent>(e =>
+                {
+                    e.StopPropagation();
+                    e.PreventDefault();
+                }, TrickleDown.TrickleDown);
+
                 Add(header);
                 _victoriaElement = new VictoriaElement(unityPackage, destination, Close);
                 Add(_victoriaElement);

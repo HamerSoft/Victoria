@@ -57,6 +57,8 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
                     default:
                         return;
                 }
+
+                keyDownEvent.StopPropagation();
             });
 
             this.AddManipulator(new DragAndDropManipulator(this));

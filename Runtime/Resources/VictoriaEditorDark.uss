@@ -22,6 +22,15 @@
     --selected-tint:    rgba(60, 140, 255, 0.25);
 }
 
+/* ---- Runtime normalization ---- */
+/* Unity's editor and runtime themes inject different default margins, paddings,
+   and a focus-ring outline. Suppress them here so hover/select states only
+   change colour, never box-model dimensions. */
+
+VisualElement:focus {
+    outline-width: 0;
+}
+
 /* ---- Base ---- */
 
 VisualElement {
@@ -30,6 +39,7 @@ VisualElement {
 
 Label {
     color: var(--text);
+    margin: 0;
 }
 
 /* ---- Buttons ---- */
@@ -50,6 +60,10 @@ Button {
     padding-right: 6px;
     padding-top: 2px;
     padding-bottom: 2px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: 1px;
+    margin-right: 1px;
 }
 
 Button:hover {
@@ -86,7 +100,23 @@ Button:focus {
 
 /* ---- Toggle ---- */
 
+.unity-toggle {
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    align-items: center;
+}
+
+.unity-toggle__label {
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+
 .unity-toggle__checkmark {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
     background-color: var(--bg-input);
     border-color: var(--border-input);
     border-left-width: 1px;
@@ -144,6 +174,30 @@ Button:focus {
 
 .unity-base-slider__dragger:hover {
     background-color: rgb(110, 110, 110);
+}
+
+.unity-scroller__low-button,
+.unity-scroller__high-button {
+    background-color: rgb(49, 49, 49);
+    border-color: var(--border);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    -unity-background-image-tint-color: var(--text-dim);
+    margin: 0;
+    padding: 0;
+}
+
+.unity-scroller__low-button:hover,
+.unity-scroller__high-button:hover {
+    background-color: rgb(70, 70, 70);
+    -unity-background-image-tint-color: var(--text);
+}
+
+.unity-scroller__low-button:active,
+.unity-scroller__high-button:active {
+    background-color: rgb(35, 35, 35);
 }
 
 /* ---- ListView ---- */
