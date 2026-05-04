@@ -40,7 +40,10 @@ namespace HamerSoft.Victoria.Core.Audio
         public void Dispose()
         {
             Stop();
-            Object.Destroy(_audioSource);
+            if (Application.isPlaying)
+                Object.Destroy(_audioSource);
+            else
+                Object.DestroyImmediate(_audioSource);
         }
     }
 }

@@ -59,6 +59,7 @@ namespace HamerSoft.Victoria.Ui
                 });
                 header.Add(new Button(Close)
                 {
+                    name = "close-button",
                     text = "X",
                     style =
                     {
@@ -79,10 +80,10 @@ namespace HamerSoft.Victoria.Ui
                 parent.Add(this);
             }
 
-            private void Close()
+            internal void Close()
             {
                 Dispose();
-                parent?.Remove(this);
+                RemoveFromHierarchy();
             }
 
             public void Dispose()
