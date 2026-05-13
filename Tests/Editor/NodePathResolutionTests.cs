@@ -156,23 +156,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual("Middle", middle.Path);
             Assert.AreEqual("Middle/Leaf", leaf.Path);
         }
-
-        [Test]
-        public void Folder_FullPath_MatchesPath()
-        {
-            var parent = new Folder("Parent");
-            var child = new Folder("Child");
-            parent.AddChild(child);
-            Assert.AreEqual(child.Path, child.FullPath);
-        }
-
-        [Test]
-        public void Asset_FullPath_IsPathPlusContentType()
-        {
-            var parent = new Folder("Parent");
-            var asset = new Asset { Name = "Script", ContentType = ".cs" };
-            parent.AddChild(asset);
-            Assert.AreEqual("Parent/Script.cs", asset.FullPath);
-        }
+        
     }
 }

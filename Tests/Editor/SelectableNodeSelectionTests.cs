@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Reflection;
 using HamerSoft.Victoria.Core.Extractor.Nodes;
 using HamerSoft.Victoria.Ui.Elements.Nodes;
@@ -32,9 +31,7 @@ namespace HamerSoft.Victoria.Tests.Editor
         {
             _window.Close();
         }
-
-        // ---- Helpers ----
-
+        
         private SelectableNode MakeRootNode(Node node)
         {
             var uiNode = new SelectableNode(node, 0, (VisualElement)_scrollView);
@@ -67,9 +64,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             element.SendEvent(evt);
         }
 
-        // ---- Tests ----
-
-        // 2.1
         [Test]
         public void ToggleParentOn_AllChildrenBecomeSelected()
         {
@@ -113,7 +107,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.IsFalse(child2.IsSelected);
         }
 
-        // 2.3
         [Test]
         public void ToggleChildOn_WhenParentIsOff_ParentToggleReflectsChange()
         {
@@ -132,7 +125,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.IsTrue(GetToggle(rootNode).value);
         }
 
-        // 2.4
         [Test]
         public void ReturnKey_OnSelectedNode_InvertsSelectionRecursively()
         {
@@ -154,8 +146,7 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.IsFalse(child1.IsSelected);
             Assert.IsFalse(child2.IsSelected);
         }
-
-        // 2.5
+        
         [Test]
         public void ReturnKey_StopsPropagation()
         {
@@ -172,18 +163,8 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             Assert.IsFalse(propagated);
         }
-
-        // ---- Nested helpers ----
-
         private class TestEditorWindow : EditorWindow
         {
-        }
-
-        private class NullDragParent : IDragParent
-        {
-            void IDragParent.Add(BaseUiNode uiNode)
-            {
-            }
         }
     }
 }

@@ -11,7 +11,6 @@ namespace HamerSoft.Victoria.Core.Extractor.Nodes
         private readonly FileInfo _selfFile;
         public override bool IsLeaf { get; }
         public override string DetailedName => IsLeaf ? $"{Name}{FileExtension()}" : Name;
-        public override string FullPath => IsLeaf ? _selfFile.FullName : _selfDirectory.FullName;
 
         public FileSystemNode(DirectoryInfo directoryInfo)
         {

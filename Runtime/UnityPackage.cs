@@ -10,7 +10,6 @@ using HamerSoft.Victoria.Core.Import;
 using HamerSoft.Victoria.Core.Search;
 using HamerSoft.Victoria.Loader;
 using HamerSoft.Victoria.Loader.Loader;
-using HamerSoft.Victoria.Ui;
 using UnityEngine;
 
 namespace HamerSoft.Victoria
@@ -20,10 +19,11 @@ namespace HamerSoft.Victoria
         private const int DEFAULT_CAPACITY = 50;
         private readonly IObjectLoader _loader;
         private readonly Dictionary<string, object> _cache;
-        public readonly ISearch Search;
+
+        internal readonly ISearch Search;
+        internal IAudioSource AudioSource { get; }
         public readonly string Name;
         public Folder Assets { get; }
-        public IAudioSource AudioSource { get; }
 
         internal UnityPackage(Folder assets, IObjectLoader loader, ISearch search, IAudioSource audioSource)
         {

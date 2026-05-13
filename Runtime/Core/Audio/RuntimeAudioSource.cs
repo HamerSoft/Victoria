@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace HamerSoft.Victoria.Core.Audio
 {
-    public class RuntimeAudioSource : IAudioSource
+    internal class RuntimeAudioSource : IAudioSource
     {
         private readonly AudioSource _audioSource;
         public bool IsPlaying => _audioSource.isPlaying;
 
-        public RuntimeAudioSource()
+        internal RuntimeAudioSource()
         {
             _audioSource = new GameObject("UnityPackage_AudioSource")
             {
@@ -15,6 +15,7 @@ namespace HamerSoft.Victoria.Core.Audio
             }.AddComponent<AudioSource>();
         }
 
+        /// <inheritdoc /> 
         public void Play(AudioClip clip)
         {
             Stop();
@@ -28,15 +29,19 @@ namespace HamerSoft.Victoria.Core.Audio
             _audioSource.Play();
         }
 
+        /// <inheritdoc /> 
         public void Stop()
         {
-            if (_audioSource)
-            {
-                _audioSource.Stop();
-                _audioSource.clip = null;
-            }
+            if (!_audioSource)
+                return;
+            _audioSource.Stop();
+            _audioSource.clip = null;
         }
 
+        /// <summary>
+        /// Dispose (destroy) the audio source
+        /// </summary>
+        ///<remarks>stops the currently playing clip, but does not destroy it.</remarks>
         public void Dispose()
         {
             Stop();

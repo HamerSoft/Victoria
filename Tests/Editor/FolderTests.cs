@@ -65,13 +65,6 @@ namespace HamerSoft.Victoria.Tests.Editor
         }
 
         [Test]
-        public void FullPath_ReturnsPath()
-        {
-            var folder = new Folder("Scripts");
-            Assert.AreEqual(folder.Path, folder.FullPath);
-        }
-
-        [Test]
         public void ToString_ReturnsName()
         {
             var folder = new Folder("Scripts");
@@ -169,7 +162,7 @@ namespace HamerSoft.Victoria.Tests.Editor
             var child = new Folder("Child");
             parent.AddChild(child);
 
-            var found = parent.TryGetChild("Child", out var result);
+            var found = parent.TryGetChildFolder("Child", out var result);
 
             Assert.IsTrue(found);
             Assert.AreEqual(child, result);
@@ -181,7 +174,7 @@ namespace HamerSoft.Victoria.Tests.Editor
             var parent = new Folder("Parent");
             parent.AddChild(new Folder("Child"));
 
-            var found = parent.TryGetChild("Other", out var result);
+            var found = parent.TryGetChildFolder("Other", out var result);
 
             Assert.IsFalse(found);
             Assert.IsNull(result);
@@ -191,7 +184,7 @@ namespace HamerSoft.Victoria.Tests.Editor
         public void TryGetChild_EmptyFolder_ReturnsFalse()
         {
             var parent = new Folder("Parent");
-            var found = parent.TryGetChild("Anything", out var result);
+            var found = parent.TryGetChildFolder("Anything", out var result);
             Assert.IsFalse(found);
             Assert.IsNull(result);
         }
@@ -202,7 +195,7 @@ namespace HamerSoft.Victoria.Tests.Editor
             var parent = new Folder("Parent");
             parent.AddChild(new Asset { Name = "Scripts", ContentType = ".cs" });
 
-            var found = parent.TryGetChild("Scripts", out var result);
+            var found = parent.TryGetChildFolder("Scripts", out var result);
 
             Assert.IsFalse(found);
             Assert.IsNull(result);
@@ -219,7 +212,7 @@ namespace HamerSoft.Victoria.Tests.Editor
             parent.AddChild(b);
             parent.AddChild(c);
 
-            parent.TryGetChild("B", out var result);
+            parent.TryGetChildFolder("B", out var result);
 
             Assert.AreEqual(b, result);
         }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using HamerSoft.Victoria.Core.Extractor.Nodes;
 using HamerSoft.Victoria.Ui.Elements.Nodes;
 using NUnit.Framework;
@@ -40,6 +39,7 @@ namespace HamerSoft.Victoria.Tests.Editor
                 _scrollView.Add(uiNode);
                 uiNode.RegisterScrollView(_scrollView);
             }
+
             return uiNode;
         }
 
@@ -57,9 +57,6 @@ namespace HamerSoft.Victoria.Tests.Editor
         private Focusable FocusedElement =>
             _window.rootVisualElement.focusController.focusedElement;
 
-        // ---- Tests ----
-
-        // 1.1
         [Test]
         public void DownArrow_CollapsedLeafWithNextSibling_FocusesNextSibling()
         {
@@ -77,7 +74,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(children[1], FocusedElement);
         }
 
-        // 1.2
         [Test]
         public void DownArrow_LastLeafInParent_FocusesUncle()
         {
@@ -103,7 +99,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(folderBNode, FocusedElement);
         }
 
-        // 1.3
         [Test]
         public void DownArrow_ExpandedFolder_FocusesFirstChild()
         {
@@ -125,7 +120,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(childNode, FocusedElement);
         }
 
-        // 1.4
         [Test]
         public void DownArrow_BottomOfTree_FocusDoesNotChange()
         {
@@ -142,7 +136,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(childNode, FocusedElement);
         }
 
-        // 1.5
         [Test]
         public void UpArrow_PreviousSiblingIsExpanded_FocusesDeepestLastChild()
         {
@@ -168,7 +161,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(deepChild, FocusedElement);
         }
 
-        // 1.6
         [Test]
         public void UpArrow_FirstChild_FocusesParent()
         {
@@ -185,7 +177,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(rootNode, FocusedElement);
         }
 
-        // 1.7
         [Test]
         public void UpArrow_RootNode_FocusDoesNotChange()
         {
@@ -196,7 +187,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(rootNode, FocusedElement);
         }
 
-        // 1.8
         [Test]
         public void RightArrow_CollapsedFolder_ExpandsAndFocusesFirstChild()
         {
@@ -216,7 +206,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(ChildrenOf(folderNode)[0], FocusedElement);
         }
 
-        // 1.9
         [Test]
         public void RightArrow_LeafNode_FocusDoesNotChange()
         {
@@ -233,7 +222,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(leafNode, FocusedElement);
         }
 
-        // 1.10
         [Test]
         public void LeftArrow_ExpandedFolder_Collapses()
         {
@@ -254,7 +242,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.IsFalse(folderNode.IsExpanded);
         }
 
-        // 1.11
         [Test]
         public void LeftArrow_CollapsedNode_FocusesParent()
         {
@@ -273,7 +260,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(rootNode, FocusedElement);
         }
 
-        // 1.12
         [Test]
         public void HandledKey_StopsPropagation()
         {
@@ -293,7 +279,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.IsFalse(propagated);
         }
 
-        // 1.13
         [Test]
         public void UnhandledKey_DoesNotStopPropagation()
         {
@@ -313,13 +298,16 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.IsTrue(propagated);
         }
 
-        // ---- Nested helpers ----
-
-        private class TestEditorWindow : EditorWindow { }
+        private class TestEditorWindow : EditorWindow
+        {
+        }
 
         private class TestUiNode : BaseUiNode
         {
-            public TestUiNode(Node node, int depth, BaseUiNode parent) : base(node, depth, parent) { }
+            public TestUiNode(Node node, int depth, BaseUiNode parent) : base(node, depth, parent)
+            {
+            }
+
             protected override BaseUiNode CreateNode(Node node) => new TestUiNode(node, Depth + 1, this);
         }
     }

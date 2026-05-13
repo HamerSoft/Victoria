@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 
 namespace HamerSoft.Victoria.Ui.Elements
 {
-    public class SearchBarElement : VisualElement
+    internal class SearchBarElement : VisualElement
     {
         private class SearchResults : VisualElement
         {

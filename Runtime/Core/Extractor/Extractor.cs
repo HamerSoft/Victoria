@@ -6,10 +6,18 @@ using HamerSoft.Victoria.Core.Extractor.Nodes;
 
 namespace HamerSoft.Victoria.Core.Extractor
 {
+    /// <summary>
+    /// Extractor class to load a .unitypackage file into memory
+    /// </summary>
     public static class Extractor
     {
         private const string COM = "com.";
 
+        /// <summary>
+        /// Parse the .unitypackage file
+        /// </summary>
+        /// <param name="inputFile">file reference</param>
+        /// <returns>root folder of the unitypackage</returns>
         public static Folder Parse(FileInfo inputFile)
         {
             using MemoryStream tarStream = new MemoryStream();
@@ -145,7 +153,7 @@ namespace HamerSoft.Victoria.Core.Extractor
                 }
                 else
                 {
-                    if (!currentDirectory.TryGetChild(part, out var child))
+                    if (!currentDirectory.TryGetChildFolder(part, out var child))
                     {
                         child = new Folder(part);
                         currentDirectory.AddChild(child);

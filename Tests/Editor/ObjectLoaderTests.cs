@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using HamerSoft.Victoria.Core.Extractor.Nodes;
 using HamerSoft.Victoria.Loader;
-using HamerSoft.Victoria.Loader.Loader;
 using NUnit.Framework;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -32,11 +31,7 @@ namespace HamerSoft.Victoria.Tests.Editor
                 _texture = null;
             }
         }
-
-        // -----------------------------------------------------------------------
-        // Empty data
-        // -----------------------------------------------------------------------
-
+        
         [Test]
         public async Task LoadObject_EmptyData_ThrowsArgumentException()
         {
@@ -70,11 +65,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             Assert.IsNotNull(caught, $"Expected ArgumentException for empty data with type {type}.");
         }
-
-        // -----------------------------------------------------------------------
-        // PlainText — successful decode
-        // -----------------------------------------------------------------------
-
+        
         [Test]
         public async Task LoadObject_PlainText_AsciiBytes_ReturnsDecodedString()
         {
@@ -110,10 +101,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual("A", result);
         }
 
-        // -----------------------------------------------------------------------
-        // PlainText — cancellation
-        // -----------------------------------------------------------------------
-
         [Test]
         public async Task LoadObject_PlainText_CancelledToken_ThrowsOperationCanceledException()
         {
@@ -133,14 +120,10 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             Assert.IsNotNull(caught, "Expected OperationCanceledException when token is pre-cancelled.");
         }
-
-        // -----------------------------------------------------------------------
-        // Unsupported preview types
-        // -----------------------------------------------------------------------
-
+        
         [TestCase(Asset.Preview.NotAvailable)]
         [TestCase(Asset.Preview.NotSupported)]
-        [TestCase(Asset.Preview.Model)]
+        [TestCase(Asset.Preview.PlainText)]
         public async Task LoadObject_UnsupportedPreviewType_ThrowsArgumentOutOfRangeException(Asset.Preview type)
         {
             var data = Encoding.UTF8.GetBytes("irrelevant");
@@ -157,11 +140,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             Assert.IsNotNull(caught, $"Expected ArgumentOutOfRangeException for type {type}.");
         }
-
-        // -----------------------------------------------------------------------
-        // Image — Texture2D loading
-        // -----------------------------------------------------------------------
-
+        
         [Test]
         public async Task LoadObject_Image_ValidPng_ReturnsNonNullTexture2D()
         {
@@ -199,11 +178,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             Assert.IsNull(_texture);
         }
-
-        // -----------------------------------------------------------------------
-        // Helpers
-        // -----------------------------------------------------------------------
-
+        
         /// <summary>
         /// Creates a minimal 1x1 white PNG using Unity's encoder so the test has
         /// no hardcoded binary blobs and stays readable as the platform evolves.

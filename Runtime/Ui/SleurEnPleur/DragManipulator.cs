@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 namespace HamerSoft.Victoria.Ui.SleurEnPleur
 {
-    public class DragManipulator : PointerManipulator
+    internal class DragManipulator : PointerManipulator
     {
         private bool _active;
         private Vector2 _pointerOffsetInTarget;
