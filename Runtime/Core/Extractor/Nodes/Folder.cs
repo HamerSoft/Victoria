@@ -39,6 +39,11 @@ namespace HamerSoft.Victoria.Core.Extractor.Nodes
         /// </summary>
         public override string DetailedName => Name;
 
+        /// <summary>
+        /// Creates a new folder node with the given name. The node path is initialised to
+        /// <paramref name="name"/> and children are compared by name for deduplication.
+        /// </summary>
+        /// <param name="name">The name of the folder.</param>
         public Folder(string name)
         {
             Children = new(EqualityComparer);
