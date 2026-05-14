@@ -1,9 +1,9 @@
 name: Test Package when Pushed
 
-  on:
-    push:
-      branches-ignore:
-        - 'main'
+on:
+  push:
+    branches-ignore:
+      - 'main'
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
