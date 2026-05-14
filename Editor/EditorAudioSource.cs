@@ -610,6 +610,13 @@ namespace HamerSoft.Victoria.EditorAudio
             }
         }
 
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            Assume.That(!Application.isBatchMode,
+                "Audio preview tests skipped: AudioUtil.PlayPreviewClip is unavailable in batch mode.");
+        }
+
         /// <summary>
         /// Creates a <see cref="MockAudioSource"/> loaded with the test audio clip before each test.
         /// </summary>
