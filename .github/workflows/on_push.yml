@@ -3,7 +3,7 @@ name: Test Package when Pushed
 on: 
   push:
     branches:
-      - '!master'
+      - '!main'
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
