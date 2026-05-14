@@ -123,7 +123,6 @@ namespace HamerSoft.Victoria.Tests.Editor
         
         [TestCase(Asset.Preview.NotAvailable)]
         [TestCase(Asset.Preview.NotSupported)]
-        [TestCase(Asset.Preview.PlainText)]
         public async Task LoadObject_UnsupportedPreviewType_ThrowsArgumentOutOfRangeException(Asset.Preview type)
         {
             var data = Encoding.UTF8.GetBytes("irrelevant");

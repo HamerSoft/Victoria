@@ -68,6 +68,7 @@ namespace HamerSoft.Victoria.Ui
                 var styleSheet = Resources.Load<StyleSheet>("VictoriaEditorDark");
                 if (styleSheet)
                     styleSheets.Add(styleSheet);
+
                 var header = new VisualElement
                 {
                     name = "header",
