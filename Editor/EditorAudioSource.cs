@@ -431,6 +431,9 @@ namespace HamerSoft.Victoria.EditorAudio
 
     public class EditorAudioSourceTests
     {
+        private const string AudioClipPath =
+            "Packages/com.hamersoft.victoria/Editor/Resources/EditorAudio/Awesome.wav";
+
         private MockAudioSource _audioSource;
 
         private class MockAudioSource : EditorAudioSource
@@ -613,7 +616,7 @@ namespace HamerSoft.Victoria.EditorAudio
         [SetUp]
         public void Setup()
         {
-            _audioSource = new MockAudioSource(Resources.Load<AudioClip>("EditorAudio/Awesome"));
+            _audioSource = new MockAudioSource(AssetDatabase.LoadAssetAtPath<AudioClip>(AudioClipPath));
         }
 
         /// <summary>
@@ -622,7 +625,7 @@ namespace HamerSoft.Victoria.EditorAudio
         [Test]
         public void WhenConstructed_TheEditorAudioSource_DoesNotThrowExceptions()
         {
-            Assert.DoesNotThrow(() => { new MockAudioSource(Resources.Load<AudioClip>("EditorAudio/Awesome")); });
+            Assert.DoesNotThrow(() => { new MockAudioSource(AssetDatabase.LoadAssetAtPath<AudioClip>(AudioClipPath)); });
         }
 
         /// <summary>
