@@ -19,9 +19,13 @@ jobs:
       matrix:
         testMode:
           - EditMode
+          - PlayMode
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: Restructure directory
+        run: bash ${GITHUB_WORKSPACE}/.github/scripts/restructure-dir.sh
 
       - name: Run tests
         uses: game-ci/unity-test-runner@v4
