@@ -56,15 +56,12 @@ namespace HamerSoft.Victoria.Tests.Runtime
                 Directory.Delete(parentDir, true);
             Object.Destroy(_theme);
             Object.Destroy(EventSystem.current.gameObject);
-            
+
             yield return null;
         }
 
         private VisualElement Root => _uiDoc.rootVisualElement;
 
-        // ---- Tests ----
-
-        // 3.1
         [Test]
         public void Create_ReturnsImporterAddedToParent()
         {
@@ -77,7 +74,6 @@ namespace HamerSoft.Victoria.Tests.Runtime
             importer.Dispose();
         }
 
-        // 3.2
         [Test]
         public void Create_WithNonExistentDestination_CreatesDirectory()
         {
@@ -90,7 +86,6 @@ namespace HamerSoft.Victoria.Tests.Runtime
             importer.Dispose();
         }
 
-        // 3.3
         [Test]
         public void Close_RemovesImporterFromParentAndDisposesPackage()
         {
@@ -109,11 +104,6 @@ namespace HamerSoft.Victoria.Tests.Runtime
             Assert.IsTrue(audioSpy.WasDisposed);
         }
 
-        // 3.4
-        // NavigationMoveEvent.GetPooled creates a target-only event (no propagation flags),
-        // so dispatching from a child never triggers the TrickleDown callback at the importer.
-        // Dispatching to the importer as the target fires the TrickleDown callback in the target
-        // phase, which is sufficient to verify the handler is wired up and calls StopPropagation.
         [UnityTest]
         public IEnumerator NavigationMoveEvent_OnImporter_IsStopped()
         {
@@ -130,7 +120,6 @@ namespace HamerSoft.Victoria.Tests.Runtime
             importer.Dispose();
         }
 
-        // 3.5
         [Test]
         public void NavigationMoveEvent_FromOutsideImporter_IsNotStopped()
         {
@@ -148,8 +137,6 @@ namespace HamerSoft.Victoria.Tests.Runtime
 
             importer.Close();
         }
-
-        // ---- Nested helpers ----
 
         private class SpyAudioSource : IAudioSource
         {
