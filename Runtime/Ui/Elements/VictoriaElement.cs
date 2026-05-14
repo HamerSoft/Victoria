@@ -31,7 +31,10 @@ namespace HamerSoft.Victoria.Ui.Elements
         public VictoriaElement(UnityPackage unityPackage, DirectoryInfo destination, Action onFinishedImport)
         {
             name = "whatever";
-            styleSheets.Add(Resources.Load<StyleSheet>("VictoriaEditorDark"));
+            var styleSheet = Resources.Load<StyleSheet>("VictoriaEditorDark");
+            if (styleSheet)
+                styleSheets.Add(styleSheet);
+            
             style.flexGrow = 1;
             style.backgroundColor = new StyleColor(new Color(0.235f, 0.235f, 0.235f));
             _importManifest = new ImportManifest();
