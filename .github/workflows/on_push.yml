@@ -32,7 +32,6 @@ jobs:
         id: testRunner
         with:
           unityVersion: 2021.3.9f1
-          packageMode: true
           testMode: ${{ matrix.testMode }}
           checkName: ${{ matrix.testMode }} test results
           githubToken: ${{ secrets.GITHUB_TOKEN }}
