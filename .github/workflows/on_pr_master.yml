@@ -22,7 +22,7 @@ jobs:
           - EditMode
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run tests
         uses: game-ci/unity-test-runner@v4
@@ -33,7 +33,7 @@ jobs:
           checkName: ${{ matrix.testMode }} test results
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: Test results (${{ matrix.testMode }})
           path: ${{ steps.testRunner.outputs.artifactsPath }}
@@ -69,7 +69,7 @@ jobs:
           file_pattern: '*Docs~/*.pdf'
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: Docs/html
@@ -81,19 +81,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: conventional changelog action
         id: changelog
         # https://github.com/TriPSs/conventional-changelog-action
-        uses: TriPSs/conventional-changelog-action@latest
+        uses: TriPSs/conventional-changelog-action@v6
         with:
           # you can also create separate token to trace action
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: create release
         # https://github.com/actions/create-release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: ${{steps.changelog.outputs.skipped == 'false'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
