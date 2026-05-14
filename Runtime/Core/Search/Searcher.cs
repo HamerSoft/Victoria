@@ -4,7 +4,7 @@ using HamerSoft.Victoria.Core.Extractor.Nodes;
 
 namespace HamerSoft.Victoria.Core.Search
 {
-    public class Searcher : ISearch
+    internal class Searcher : ISearch
     {
         private readonly Folder _root;
 

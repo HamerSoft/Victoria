@@ -44,6 +44,21 @@ The package tree has a search bar. Type a name, Victoria runs a breadth-first se
 
 ![Victoria Editor](Docs~/Victoria-Editor.png)
 
+### Runtime Import — *"I don't need the editor. I NEVER needed the editor."*
+
+Yes, Addressables exist. Yes, AssetBundles exist. Victoria is aware. Victoria imports `.unitypackage` files at runtime anyway, on a Tuesday afternoon, just because she can.
+
+This is a pure API. No file explorer, no window, no cross-platform file picker nonsense. You give Victoria a path. She does the rest.
+
+```csharp
+var importer = new VictoriaRuntimeImporter();
+await importer.ImportAsync("path/to/your.unitypackage");
+// Files are now in Application.persistentDataPath.
+// Load them however you want. Victoria is not your mom.
+```
+
+Once she's done, everything is sitting in `Application.persistentDataPath` and Victoria has moved on with her life. What happens next is entirely your business. Load a `.fbx` with your favorite runtime model loader. Play back audio. Hotpatch your game with fresh assets without touching a build. Use whatever third-party library you want for whatever asset type you want. She does not care. She put the files on disk. Her job is done.
+
 ---
 
 ## Installation

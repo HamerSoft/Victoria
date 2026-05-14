@@ -21,9 +21,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Restructure directory
-        run: bash ${GITHUB_WORKSPACE}/.github/scripts/restructure-dir.sh
-
       - name: Run tests
         uses: game-ci/unity-test-runner@v4
         id: testRunner
@@ -36,7 +33,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Test results (${{ matrix.testMode }})
-          path: ${{ steps.testRunner.outputs.artifactsPath }}
-
-      - name: Revert Directory
-        run: bash ${GITHUB_WORKSPACE}/.github/scripts/revert-dir.sh      
+          path: ${{ steps.testRunner.outputs.artifactsPath }}  

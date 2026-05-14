@@ -5,7 +5,7 @@ using HamerSoft.Victoria.Core.Extractor.Nodes;
 
 namespace HamerSoft.Victoria.Loader.Loader
 {
-    public interface IObjectLoader
+    internal interface IObjectLoader
     {
         public Task<T> LoadObject<T>(string id, byte[] data, Asset.Preview type, CancellationToken token);
     }

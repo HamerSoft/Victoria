@@ -4,15 +4,36 @@ using System.Threading.Tasks;
 
 namespace HamerSoft.Victoria.Core.Extractor.Nodes
 {
+    /// <summary>
+    /// base class for representing nodes in the file-tree
+    /// </summary>
     public abstract class Node
     {
+        /// <summary>
+        /// Name of the node
+        /// </summary>
         public string Name { get; internal set; }
+        /// <summary>
+        /// Full path of the node
+        /// </summary>
         public string Path { get; internal set; }
+        /// <summary>
+        /// Children of the node
+        /// </summary>
+        /// <remarks>always initialized</remarks>
         public HashSet<Node> Children { get; protected set; }
+        /// <summary>
+        /// Whether the node is a leaf node
+        /// </summary>
         public abstract bool IsLeaf { get; }
+        /// <summary>
+        /// Full file / folder name
+        /// </summary>
         public abstract string DetailedName { get; }
-        public abstract string FullPath { get; }
 
+        /// <summary>
+        /// The parent node
+        /// </summary>
         public Node Parent
         {
             get => _parent;
@@ -40,8 +61,16 @@ namespace HamerSoft.Victoria.Core.Extractor.Nodes
 
         private Node _parent;
 
+        /// <summary>
+        /// Check whether the node has children
+        /// </summary>
         public bool HasChildren => Children.Count > 0;
 
+        /// <summary>
+        /// Write out a node (back) to disk
+        /// </summary>
+        /// <param name="rootPath">Path where to write it to</param>
+        /// <returns>awaitable IO task</returns>
         public abstract Task WriteOut(string rootPath);
 
         protected string MergeOverlappingPaths(string relativePath, string absolutePath)

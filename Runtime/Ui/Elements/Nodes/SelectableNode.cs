@@ -10,13 +10,13 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
 {
     internal class SelectableNode : BaseUiNode
     {
-        private readonly Toggle _toggle;
         private bool _isSelected;
         private readonly SelectableNode _originalParentUiNode;
         private readonly VisualElement _originalContentContainer;
         private int _originalIndex;
         public bool IsSelected => _isSelected;
         public IEnumerable<SelectableNode> ChildrenNodes => base.ChildUiNodes.Cast<SelectableNode>();
+        internal readonly Toggle Toggle;
 
         public event Action<SelectableNode> Destroyed;
         public event Action<SelectableNode> DragStarted;
@@ -31,10 +31,10 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
         {
             _originalContentContainer = parentNode?.contentContainer;
             _isSelected = parentNode?._isSelected ?? true;
-            Header.Insert(0, _toggle = new Toggle());
+            Header.Insert(0, Toggle = new Toggle());
 
-            _toggle.SetValueWithoutNotify(_isSelected);
-            _toggle.RegisterValueChangedCallback(evt =>
+            Toggle.SetValueWithoutNotify(_isSelected);
+            Toggle.RegisterValueChangedCallback(evt =>
             {
                 _isSelected = evt.newValue;
                 SelectChildren(_isSelected);
@@ -57,6 +57,8 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
                     default:
                         return;
                 }
+
+                keyDownEvent.StopPropagation();
             });
 
             this.AddManipulator(new DragAndDropManipulator(this));
@@ -75,13 +77,13 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
         private void SetSelectedRecursive(bool isSelected)
         {
             _isSelected = isSelected;
-            _toggle.SetValueWithoutNotify(_isSelected);
+            Toggle.SetValueWithoutNotify(_isSelected);
             SelectChildren(_isSelected);
         }
 
         private void PropagateSelected(bool isSelected)
         {
-            _toggle.SetValueWithoutNotify(isSelected);
+            Toggle.SetValueWithoutNotify(isSelected);
             (ParentUiNode as SelectableNode)?.PropagateSelected(isSelected);
         }
 

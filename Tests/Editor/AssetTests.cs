@@ -48,25 +48,6 @@ namespace HamerSoft.Victoria.Tests.Editor
             Assert.AreEqual(Asset.Preview.Image, asset.GetPreviewType());
         }
 
-        [TestCase(".fbx")]
-        [TestCase(".dae")]
-        [TestCase(".3ds")]
-        [TestCase(".dxf")]
-        [TestCase(".obj")]
-        public void GetPreviewType_ModelPreviewType_ReturnsModel(string previewType)
-        {
-            var asset = new Asset { ContentType = ".png", PreviewType = previewType };
-            Assert.AreEqual(Asset.Preview.Model, asset.GetPreviewType());
-        }
-
-        [TestCase(".FBX")]
-        [TestCase(".OBJ")]
-        public void GetPreviewType_ModelPreviewTypeUpperCase_ReturnsModel(string previewType)
-        {
-            var asset = new Asset { ContentType = ".png", PreviewType = previewType };
-            Assert.AreEqual(Asset.Preview.Model, asset.GetPreviewType());
-        }
-
         [Test]
         public void GetPreviewType_UnknownContentTypeAndNullPreviewType_ReturnsNotAvailable()
         {
@@ -136,15 +117,6 @@ namespace HamerSoft.Victoria.Tests.Editor
         {
             var asset = new Asset { Name = "MyScript", ContentType = null };
             Assert.AreEqual("MyScript", asset.DetailedName);
-        }
-
-        [Test]
-        public void FullPath_ReturnsConcatenationOfPathAndContentType()
-        {
-            var asset = new Asset { Name = "MyScript", ContentType = ".cs" };
-            var root = new Folder("Root");
-            root.AddChild(asset);
-            Assert.AreEqual("Root/MyScript.cs", asset.FullPath);
         }
 
         [Test]

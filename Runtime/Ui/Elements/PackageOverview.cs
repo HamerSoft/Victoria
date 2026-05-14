@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace HamerSoft.Victoria.Ui.Elements
 {
-    public class PackageOverview : VisualElement
+    internal class PackageOverview : VisualElement
     {
         private readonly SelectableNode _rootNode;
         private UnityPackage _unityPackage;

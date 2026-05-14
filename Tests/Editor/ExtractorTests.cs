@@ -55,7 +55,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             var asset = FindAsset(scripts, "MyScript");
             Assert.AreEqual("MyScript", asset.Name);
         }
@@ -69,7 +69,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             var asset = FindAsset(scripts, "MyScript");
             Assert.AreEqual(".cs", asset.ContentType);
         }
@@ -84,7 +84,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             var asset = FindAsset(scripts, "MyScript");
             Assert.AreEqual(expectedContent, asset.FileContent);
         }
@@ -99,7 +99,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             var asset = FindAsset(scripts, "MyScript");
             Assert.AreEqual(meta, asset.MetaFile);
         }
@@ -113,7 +113,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             var asset = FindAsset(scripts, "MyScript");
             Assert.IsNull(asset.FileContent);
         }
@@ -127,7 +127,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             var asset = FindAsset(scripts, "MyScript");
             Assert.IsNull(asset.MetaFile);
         }
@@ -144,7 +144,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Textures", out var textures);
+            root.TryGetChildFolder("Textures", out var textures);
             var asset = FindAsset(textures, "MyTexture");
             Assert.AreEqual(previewBytes, asset.PreviewContent);
         }
@@ -160,7 +160,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Textures", out var textures);
+            root.TryGetChildFolder("Textures", out var textures);
             var asset = FindAsset(textures, "MyTexture");
             Assert.AreEqual(".png", asset.PreviewType);
         }
@@ -174,7 +174,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             var asset = FindAsset(scripts, "MyScript");
             Assert.IsNull(asset.PreviewContent);
         }
@@ -201,7 +201,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            var found = root.TryGetChild("Scripts", out _);
+            var found = root.TryGetChildFolder("Scripts", out _);
             Assert.IsTrue(found);
         }
 
@@ -214,10 +214,10 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             Assert.IsNotNull(scripts, "Expected 'Scripts' folder");
 
-            var found = scripts.TryGetChild("Utils", out var utils);
+            var found = scripts.TryGetChildFolder("Utils", out var utils);
             Assert.IsTrue(found, "Expected 'Utils' folder inside 'Scripts'");
             Assert.IsNotNull(FindAsset(utils, "Helper"), "Expected 'Helper' asset inside 'Utils'");
         }
@@ -232,9 +232,9 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            var found = root.TryGetChild("com.example", out var comFolder);
+            var found = root.TryGetChildFolder("com.example", out var comFolder);
             Assert.IsTrue(found, "Expected 'com.example' to be a folder");
-            comFolder.TryGetChild("Scripts", out var scripts);
+            comFolder.TryGetChildFolder("Scripts", out var scripts);
             Assert.IsNotNull(FindAsset(scripts, "MyScript"));
         }
 
@@ -248,7 +248,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             Assert.AreEqual(1, root.Children.OfType<Folder>().Count(f => f.Name == "Scripts"),
                 "Expected exactly one 'Scripts' folder");
             Assert.IsNotNull(FindAsset(scripts, "ScriptA"));
@@ -266,8 +266,8 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
-            root.TryGetChild("Textures", out var textures);
+            root.TryGetChildFolder("Scripts", out var scripts);
+            root.TryGetChildFolder("Textures", out var textures);
 
             Assert.IsNotNull(FindAsset(scripts, "ScriptA"), "ScriptA missing");
             Assert.IsNotNull(FindAsset(scripts, "ScriptB"), "ScriptB missing");
@@ -284,7 +284,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             Assert.AreEqual(2, scripts.Children.Count);
         }
 
@@ -309,7 +309,7 @@ namespace HamerSoft.Victoria.Tests.Editor
 
             var root = Extractor.Parse(_packageFile);
 
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             Assert.IsNotNull(FindAsset(scripts, "MyScript"));
         }
 
@@ -321,26 +321,11 @@ namespace HamerSoft.Victoria.Tests.Editor
                 .Build();
 
             var root = Extractor.Parse(_packageFile);
-            root.TryGetChild("Scripts", out var scripts);
+            root.TryGetChildFolder("Scripts", out var scripts);
             var asset = FindAsset(scripts, "MyScript");
 
             var expected = Path.Combine("mypackage.unitypackage", "Scripts", "MyScript");
             Assert.AreEqual(expected, asset.Path);
-        }
-
-        [Test]
-        public void Parse_Asset_FullPathIsPathPlusContentType()
-        {
-            _packageFile = new UnityPackageBuilder("mypackage.unitypackage")
-                .AddAsset("Scripts/MyScript.cs")
-                .Build();
-
-            var root = Extractor.Parse(_packageFile);
-            root.TryGetChild("Scripts", out var scripts);
-            var asset = FindAsset(scripts, "MyScript");
-
-            var expected = Path.Combine("mypackage.unitypackage", "Scripts", "MyScript") + ".cs";
-            Assert.AreEqual(expected, asset.FullPath);
         }
     }
 }

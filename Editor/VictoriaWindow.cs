@@ -1,5 +1,4 @@
 using System.IO;
-using HamerSoft.Victoria.Core.Extractor;
 using HamerSoft.Victoria.EditorAudio;
 using HamerSoft.Victoria.Ui.Elements;
 using UnityEditor;
@@ -8,18 +7,24 @@ using UnityEngine.UIElements;
 
 namespace HamerSoft.Victoria.Editor
 {
+    /// <summary>
+    /// Victoria editor window which renders the importer
+    /// </summary>
     public class VictoriaWindow : EditorWindow
     {
-        private const string UNITYPACKAGE = "unitypackage";
+        private const string UNITY_PACKAGE = "unitypackage";
         private static VictoriaWindow _instance;
         private VisualElement _root;
         private UnityPackage _unityPackage;
         private VictoriaElement _victoria;
 
+        /// <summary>
+        /// Entry point for showing the import window in the editor.
+        /// </summary>
         [MenuItem("Tools/HamerSoft/Victoria/Import Package")]
-        public static void Import()
+        public static void SpawnWindow()
         {
-            var selectedPackage = EditorUtility.OpenFilePanel($"Select .{UNITYPACKAGE}", "", UNITYPACKAGE);
+            var selectedPackage = EditorUtility.OpenFilePanel($"Select .{UNITY_PACKAGE}", "", UNITY_PACKAGE);
             if (string.IsNullOrWhiteSpace(selectedPackage))
             {
                 Debug.LogError("[Victoria] Failed to select package.");
@@ -61,13 +66,14 @@ namespace HamerSoft.Victoria.Editor
         {
             _unityPackage = unityPackage;
             _root = rootVisualElement;
-            _root.Add(_victoria = new VictoriaElement(_unityPackage, () =>
-            {
+            _root.Add(_victoria = new VictoriaElement(_unityPackage,
+                new DirectoryInfo(Path.Combine(Application.dataPath, "..")), () =>
+                {
 #if UNITY_EDITOR
-                AssetDatabase.Refresh();
+                    AssetDatabase.Refresh();
 #endif
-                CloseWindow();
-            }) { style = { flexGrow = 1 } });
+                    CloseWindow();
+                }) { style = { flexGrow = 1 } });
         }
     }
 }

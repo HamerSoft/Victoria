@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace HamerSoft.Victoria.Loader
 {
-    public class ObjectLoader : IObjectLoader
+    internal class ObjectLoader : IObjectLoader
     {
         private readonly string _audioCachePath;
 

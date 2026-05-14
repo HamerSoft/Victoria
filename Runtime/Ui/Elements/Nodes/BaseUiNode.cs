@@ -22,7 +22,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
         internal ScrollView ParentScrollView { get; private set; }
         private int _lockedCounter;
         protected virtual int DepthMultiplier { get; } = 2;
-        protected List<BaseUiNode> ChildUiNodes { get; private set; } = new();
+        protected internal List<BaseUiNode> ChildUiNodes { get; private set; } = new();
         protected VisualElement Header { get; }
 
         public override VisualElement contentContainer => _contentContainer ?? base.contentContainer;
@@ -141,7 +141,7 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
 
                     break;
                 case KeyCode.UpArrow:
-                    if (ParentUiNode == null) return;
+                    if (ParentUiNode == null) break;
                     indexInParent = ParentUiNode.ChildUiNodes.IndexOf(this);
                     if (indexInParent > 0)
                     {
@@ -190,6 +190,8 @@ namespace HamerSoft.Victoria.Ui.Elements.Nodes
                 default:
                     return;
             }
+
+            keyDownEvent.StopPropagation();
         }
 
         internal void ExpandOrCollapse()
