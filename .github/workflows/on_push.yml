@@ -31,7 +31,7 @@ jobs:
         uses: game-ci/unity-test-runner@v4
         id: testRunner
         with:
-          unityVersion: 2022.3
+          unityVersion: 2022.3.16f1
           packageMode: true
           testMode: ${{ matrix.testMode }}
           checkName: ${{ matrix.testMode }} test results
