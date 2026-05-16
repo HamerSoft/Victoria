@@ -68,7 +68,7 @@ jobs:
       - name: Add offline Documentation to Repo
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "ci: update offline docs"
+          commit_message: "ci: update offline docs [skip ci]"
           file_pattern: '*Docs~/*.pdf'
 
       - name: Deploy 🚀
