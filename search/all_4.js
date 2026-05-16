@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['editor_20i_20never_20needed_20the_20editor_0',['Runtime Import — *&quot;I don&apos;t need the editor. I NEVER needed the editor.&quot;*',['../index.html#autotoc_md8',1,'']]],
-  ['editoraudiosource_1',['editoraudiosource',['../classHamerSoft_1_1Victoria_1_1EditorAudio_1_1EditorAudioSource.html',1,'HamerSoft.Victoria.EditorAudio.EditorAudioSource'],['../classHamerSoft_1_1Victoria_1_1EditorAudio_1_1EditorAudioSource.html#a85fefe595347027905fce8040d9afec0',1,'HamerSoft.Victoria.EditorAudio.EditorAudioSource.EditorAudioSource()']]],
-  ['extractor_2',['Extractor',['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Extractor.html',1,'HamerSoft::Victoria::Core::Extractor']]]
+  ['because_20i_20want_20to_0',['Drag &amp; Drop to Wherever You Please — *&quot;I&apos;ll put it HERE. Because I want to.&quot;*',['../index.html#autotoc_md7',1,'']]],
+  ['before_20you_20commit_20—_20i_20m_20not_20importing_20that_1',['Browse Before You Commit — *&quot;I&apos;m not importing that.&quot;*',['../index.html#autotoc_md6',1,'']]],
+  ['blockquote_2',['&lt;/blockquote&gt;',['../index.html#autotoc_md3',1,'']]],
+  ['browse_20before_20you_20commit_20—_20i_20m_20not_20importing_20that_3',['Browse Before You Commit — *&quot;I&apos;m not importing that.&quot;*',['../index.html#autotoc_md6',1,'']]]
 ];

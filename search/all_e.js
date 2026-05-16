@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['resumeclip_0',['ResumeClip',['../classHamerSoft_1_1Victoria_1_1EditorAudio_1_1EditorAudioSource.html#a9448f518404ec9f17a9d47fc097eceb1',1,'HamerSoft::Victoria::EditorAudio::EditorAudioSource']]],
-  ['runtime_20import_20—_20i_20don_20t_20need_20the_20editor_20i_20never_20needed_20the_20editor_1',['Runtime Import — *&quot;I don&apos;t need the editor. I NEVER needed the editor.&quot;*',['../index.html#autotoc_md8',1,'']]]
+  ['m_20not_20importing_20that_0',['Browse Before You Commit — *&quot;I&apos;m not importing that.&quot;*',['../index.html#autotoc_md6',1,'']]],
+  ['me_20look_20at_20it_20first_1',['Asset Preview — *&quot;Let me look at it first.&quot;*',['../index.html#autotoc_md8',1,'']]],
+  ['metafile_2',['MetaFile',['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Asset.html#a961dda81044d7a3e72a7f003e87a42e5',1,'HamerSoft::Victoria::Core::Extractor::Nodes::Asset']]]
 ];

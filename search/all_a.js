@@ -1,10 +1,26 @@
 var searchData=
 [
-  ['let_20me_20look_20at_20it_20first_0',['Asset Preview — *&quot;Let me look at it first.&quot;*',['../index.html#autotoc_md6',1,'']]],
-  ['license_1',['LICENSE',['../md_LICENSE.html',1,'']]],
-  ['ll_20put_20it_20here_20because_20i_20want_20to_2',['Drag &amp; Drop to Wherever You Please — *&quot;I&apos;ll put it HERE. Because I want to.&quot;*',['../index.html#autotoc_md5',1,'']]],
-  ['loadfrompath_3',['LoadFromPath',['../classHamerSoft_1_1Victoria_1_1UnityPackage.html#acc6bf2ce66fd9e6ef8980c92ef61609d',1,'HamerSoft::Victoria::UnityPackage']]],
-  ['loadobject_3c_20t_20_3e_4',['LoadObject&lt; T &gt;',['../classHamerSoft_1_1Victoria_1_1UnityPackage.html#abc9efd97a241b20a1d1bcfcd6df74de4',1,'HamerSoft::Victoria::UnityPackage']]],
-  ['look_20at_20it_20first_5',['Asset Preview — *&quot;Let me look at it first.&quot;*',['../index.html#autotoc_md6',1,'']]],
-  ['loopclip_6',['LoopClip',['../classHamerSoft_1_1Victoria_1_1EditorAudio_1_1EditorAudioSource.html#a35b02246c88cc6278bdf7cb28cf14698',1,'HamerSoft::Victoria::EditorAudio::EditorAudioSource']]]
+  ['hamersoft_0',['HamerSoft',['../namespaceHamerSoft.html',1,'']]],
+  ['hamersoft_3a_3avictoria_1',['Victoria',['../namespaceHamerSoft_1_1Victoria.html',1,'HamerSoft']]],
+  ['hamersoft_3a_3avictoria_3a_3acore_2',['Core',['../namespaceHamerSoft_1_1Victoria_1_1Core.html',1,'HamerSoft::Victoria']]],
+  ['hamersoft_3a_3avictoria_3a_3acore_3a_3aaudio_3',['Audio',['../namespaceHamerSoft_1_1Victoria_1_1Core_1_1Audio.html',1,'HamerSoft::Victoria::Core']]],
+  ['hamersoft_3a_3avictoria_3a_3acore_3a_3aextractor_4',['Extractor',['../namespaceHamerSoft_1_1Victoria_1_1Core_1_1Extractor.html',1,'HamerSoft::Victoria::Core']]],
+  ['hamersoft_3a_3avictoria_3a_3acore_3a_3aextractor_3a_3anodes_5',['Nodes',['../namespaceHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes.html',1,'HamerSoft::Victoria::Core::Extractor']]],
+  ['hamersoft_3a_3avictoria_3a_3acore_3a_3aimport_6',['Import',['../namespaceHamerSoft_1_1Victoria_1_1Core_1_1Import.html',1,'HamerSoft::Victoria::Core']]],
+  ['hamersoft_3a_3avictoria_3a_3acore_3a_3asearch_7',['Search',['../namespaceHamerSoft_1_1Victoria_1_1Core_1_1Search.html',1,'HamerSoft::Victoria::Core']]],
+  ['hamersoft_3a_3avictoria_3a_3aeditor_8',['Editor',['../namespaceHamerSoft_1_1Victoria_1_1Editor.html',1,'HamerSoft::Victoria']]],
+  ['hamersoft_3a_3avictoria_3a_3aeditoraudio_9',['EditorAudio',['../namespaceHamerSoft_1_1Victoria_1_1EditorAudio.html',1,'HamerSoft::Victoria']]],
+  ['hamersoft_3a_3avictoria_3a_3aloader_10',['Loader',['../namespaceHamerSoft_1_1Victoria_1_1Loader.html',1,'HamerSoft::Victoria']]],
+  ['hamersoft_3a_3avictoria_3a_3aloader_3a_3aloader_11',['Loader',['../namespaceHamerSoft_1_1Victoria_1_1Loader_1_1Loader.html',1,'HamerSoft::Victoria::Loader']]],
+  ['hamersoft_3a_3avictoria_3a_3atests_12',['Tests',['../namespaceHamerSoft_1_1Victoria_1_1Tests.html',1,'HamerSoft::Victoria']]],
+  ['hamersoft_3a_3avictoria_3a_3atests_3a_3aeditor_13',['Editor',['../namespaceHamerSoft_1_1Victoria_1_1Tests_1_1Editor.html',1,'HamerSoft::Victoria::Tests']]],
+  ['hamersoft_3a_3avictoria_3a_3atests_3a_3aeditor_3a_3ahelpers_14',['Helpers',['../namespaceHamerSoft_1_1Victoria_1_1Tests_1_1Editor_1_1Helpers.html',1,'HamerSoft::Victoria::Tests::Editor']]],
+  ['hamersoft_3a_3avictoria_3a_3atests_3a_3aruntime_15',['Runtime',['../namespaceHamerSoft_1_1Victoria_1_1Tests_1_1Runtime.html',1,'HamerSoft::Victoria::Tests']]],
+  ['hamersoft_3a_3avictoria_3a_3aui_16',['Ui',['../namespaceHamerSoft_1_1Victoria_1_1Ui.html',1,'HamerSoft::Victoria']]],
+  ['hamersoft_3a_3avictoria_3a_3aui_3a_3aelements_17',['Elements',['../namespaceHamerSoft_1_1Victoria_1_1Ui_1_1Elements.html',1,'HamerSoft::Victoria::Ui']]],
+  ['hamersoft_3a_3avictoria_3a_3aui_3a_3aelements_3a_3anodes_18',['Nodes',['../namespaceHamerSoft_1_1Victoria_1_1Ui_1_1Elements_1_1Nodes.html',1,'HamerSoft::Victoria::Ui::Elements']]],
+  ['hamersoft_3a_3avictoria_3a_3aui_3a_3asleurenpleur_19',['SleurEnPleur',['../namespaceHamerSoft_1_1Victoria_1_1Ui_1_1SleurEnPleur.html',1,'HamerSoft::Victoria::Ui']]],
+  ['haschildren_20',['HasChildren',['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Node.html#a865a72506e8648ba2eb3379a212dd37d',1,'HamerSoft::Victoria::Core::Extractor::Nodes::Node']]],
+  ['here_21',['Search — *&quot;Where is it?! I KNOW it&apos;s in here.&quot;*',['../index.html#autotoc_md9',1,'']]],
+  ['here_20because_20i_20want_20to_22',['Drag &amp; Drop to Wherever You Please — *&quot;I&apos;ll put it HERE. Because I want to.&quot;*',['../index.html#autotoc_md7',1,'']]]
 ];

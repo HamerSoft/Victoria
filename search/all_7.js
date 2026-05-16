@@ -1,26 +1,6 @@
 var searchData=
 [
-  ['hamersoft_0',['HamerSoft',['../namespaceHamerSoft.html',1,'']]],
-  ['hamersoft_3a_3avictoria_1',['Victoria',['../namespaceHamerSoft_1_1Victoria.html',1,'HamerSoft']]],
-  ['hamersoft_3a_3avictoria_3a_3acore_2',['Core',['../namespaceHamerSoft_1_1Victoria_1_1Core.html',1,'HamerSoft::Victoria']]],
-  ['hamersoft_3a_3avictoria_3a_3acore_3a_3aaudio_3',['Audio',['../namespaceHamerSoft_1_1Victoria_1_1Core_1_1Audio.html',1,'HamerSoft::Victoria::Core']]],
-  ['hamersoft_3a_3avictoria_3a_3acore_3a_3aextractor_4',['Extractor',['../namespaceHamerSoft_1_1Victoria_1_1Core_1_1Extractor.html',1,'HamerSoft::Victoria::Core']]],
-  ['hamersoft_3a_3avictoria_3a_3acore_3a_3aextractor_3a_3anodes_5',['Nodes',['../namespaceHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes.html',1,'HamerSoft::Victoria::Core::Extractor']]],
-  ['hamersoft_3a_3avictoria_3a_3acore_3a_3aimport_6',['Import',['../namespaceHamerSoft_1_1Victoria_1_1Core_1_1Import.html',1,'HamerSoft::Victoria::Core']]],
-  ['hamersoft_3a_3avictoria_3a_3acore_3a_3asearch_7',['Search',['../namespaceHamerSoft_1_1Victoria_1_1Core_1_1Search.html',1,'HamerSoft::Victoria::Core']]],
-  ['hamersoft_3a_3avictoria_3a_3aeditor_8',['Editor',['../namespaceHamerSoft_1_1Victoria_1_1Editor.html',1,'HamerSoft::Victoria']]],
-  ['hamersoft_3a_3avictoria_3a_3aeditoraudio_9',['EditorAudio',['../namespaceHamerSoft_1_1Victoria_1_1EditorAudio.html',1,'HamerSoft::Victoria']]],
-  ['hamersoft_3a_3avictoria_3a_3aloader_10',['Loader',['../namespaceHamerSoft_1_1Victoria_1_1Loader.html',1,'HamerSoft::Victoria']]],
-  ['hamersoft_3a_3avictoria_3a_3aloader_3a_3aloader_11',['Loader',['../namespaceHamerSoft_1_1Victoria_1_1Loader_1_1Loader.html',1,'HamerSoft::Victoria::Loader']]],
-  ['hamersoft_3a_3avictoria_3a_3atests_12',['Tests',['../namespaceHamerSoft_1_1Victoria_1_1Tests.html',1,'HamerSoft::Victoria']]],
-  ['hamersoft_3a_3avictoria_3a_3atests_3a_3aeditor_13',['Editor',['../namespaceHamerSoft_1_1Victoria_1_1Tests_1_1Editor.html',1,'HamerSoft::Victoria::Tests']]],
-  ['hamersoft_3a_3avictoria_3a_3atests_3a_3aeditor_3a_3ahelpers_14',['Helpers',['../namespaceHamerSoft_1_1Victoria_1_1Tests_1_1Editor_1_1Helpers.html',1,'HamerSoft::Victoria::Tests::Editor']]],
-  ['hamersoft_3a_3avictoria_3a_3atests_3a_3aruntime_15',['Runtime',['../namespaceHamerSoft_1_1Victoria_1_1Tests_1_1Runtime.html',1,'HamerSoft::Victoria::Tests']]],
-  ['hamersoft_3a_3avictoria_3a_3aui_16',['Ui',['../namespaceHamerSoft_1_1Victoria_1_1Ui.html',1,'HamerSoft::Victoria']]],
-  ['hamersoft_3a_3avictoria_3a_3aui_3a_3aelements_17',['Elements',['../namespaceHamerSoft_1_1Victoria_1_1Ui_1_1Elements.html',1,'HamerSoft::Victoria::Ui']]],
-  ['hamersoft_3a_3avictoria_3a_3aui_3a_3aelements_3a_3anodes_18',['Nodes',['../namespaceHamerSoft_1_1Victoria_1_1Ui_1_1Elements_1_1Nodes.html',1,'HamerSoft::Victoria::Ui::Elements']]],
-  ['hamersoft_3a_3avictoria_3a_3aui_3a_3asleurenpleur_19',['SleurEnPleur',['../namespaceHamerSoft_1_1Victoria_1_1Ui_1_1SleurEnPleur.html',1,'HamerSoft::Victoria::Ui']]],
-  ['haschildren_20',['HasChildren',['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Node.html#a865a72506e8648ba2eb3379a212dd37d',1,'HamerSoft::Victoria::Core::Extractor::Nodes::Node']]],
-  ['here_21',['Search — *&quot;Where is it?! I KNOW it&apos;s in here.&quot;*',['../index.html#autotoc_md7',1,'']]],
-  ['here_20because_20i_20want_20to_22',['Drag &amp; Drop to Wherever You Please — *&quot;I&apos;ll put it HERE. Because I want to.&quot;*',['../index.html#autotoc_md5',1,'']]]
+  ['editor_20i_20never_20needed_20the_20editor_0',['Runtime Import — *&quot;I don&apos;t need the editor. I NEVER needed the editor.&quot;*',['../index.html#autotoc_md10',1,'']]],
+  ['editoraudiosource_1',['editoraudiosource',['../classHamerSoft_1_1Victoria_1_1EditorAudio_1_1EditorAudioSource.html',1,'HamerSoft.Victoria.EditorAudio.EditorAudioSource'],['../classHamerSoft_1_1Victoria_1_1EditorAudio_1_1EditorAudioSource.html#a85fefe595347027905fce8040d9afec0',1,'HamerSoft.Victoria.EditorAudio.EditorAudioSource.EditorAudioSource()']]],
+  ['extractor_2',['Extractor',['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Extractor.html',1,'HamerSoft::Victoria::Core::Extractor']]]
 ];

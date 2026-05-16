@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['detailedname_0',['detailedname',['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Asset.html#a78420d59287c5ceefa38c070fb2b7b4d',1,'HamerSoft.Victoria.Core.Extractor.Nodes.Asset.DetailedName'],['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1FileSystemNode.html#a154302b528d921e59a9c37519c36c207',1,'HamerSoft.Victoria.Core.Extractor.Nodes.FileSystemNode.DetailedName'],['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Folder.html#aa2a97a53f75d530d0435cf3434956aac',1,'HamerSoft.Victoria.Core.Extractor.Nodes.Folder.DetailedName'],['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Node.html#ac68c05b1f8bbcb7173981d3fb6752d71',1,'HamerSoft.Victoria.Core.Extractor.Nodes.Node.DetailedName']]],
-  ['dispose_1',['dispose',['../classHamerSoft_1_1Victoria_1_1EditorAudio_1_1EditorAudioSource.html#a5050bd0248974b6f637f2bc057ea946f',1,'HamerSoft.Victoria.EditorAudio.EditorAudioSource.Dispose()'],['../classHamerSoft_1_1Victoria_1_1Ui_1_1Victoria_1_1VictoriaRuntimeImporter.html#ad5e789401064f8376d60ec1112660332',1,'HamerSoft.Victoria.Ui.Victoria.VictoriaRuntimeImporter.Dispose()'],['../classHamerSoft_1_1Victoria_1_1UnityPackage.html#a18fbf071264fe0fc19f9bc85c42724de',1,'HamerSoft.Victoria.UnityPackage.Dispose()']]],
-  ['do_20what_20i_20want_2',['Victoria — *&quot;Whatever, I do what I want!&quot;*',['../index.html',1,'']]],
-  ['don_20t_20need_20the_20editor_20i_20never_20needed_20the_20editor_3',['Runtime Import — *&quot;I don&apos;t need the editor. I NEVER needed the editor.&quot;*',['../index.html#autotoc_md8',1,'']]],
-  ['drag_20drop_20to_20wherever_20you_20please_20—_20i_20ll_20put_20it_20here_20because_20i_20want_20to_4',['Drag &amp; Drop to Wherever You Please — *&quot;I&apos;ll put it HERE. Because I want to.&quot;*',['../index.html#autotoc_md5',1,'']]],
-  ['drop_20to_20wherever_20you_20please_20—_20i_20ll_20put_20it_20here_20because_20i_20want_20to_5',['Drag &amp; Drop to Wherever You Please — *&quot;I&apos;ll put it HERE. Because I want to.&quot;*',['../index.html#autotoc_md5',1,'']]]
+  ['addchild_0',['AddChild',['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Folder.html#ae2cdf00c559e3f54b9588d5ebb0592b6',1,'HamerSoft::Victoria::Core::Extractor::Nodes::Folder']]],
+  ['asset_1',['Asset',['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Asset.html',1,'HamerSoft::Victoria::Core::Extractor::Nodes']]],
+  ['asset_20preview_20—_20let_20me_20look_20at_20it_20first_2',['Asset Preview — *&quot;Let me look at it first.&quot;*',['../index.html#autotoc_md8',1,'']]],
+  ['assets_3',['Assets',['../classHamerSoft_1_1Victoria_1_1UnityPackage.html#acf32018cf055fbfa18edcd0e6950fb90',1,'HamerSoft::Victoria::UnityPackage']]],
+  ['at_20it_20first_4',['Asset Preview — *&quot;Let me look at it first.&quot;*',['../index.html#autotoc_md8',1,'']]],
+  ['audio_5',['Audio',['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Asset.html#a1b923841d1018b65d29bd6aa9d55b0bfab22f0418e8ac915eb66f829d262d14a2',1,'HamerSoft::Victoria::Core::Extractor::Nodes::Asset']]]
 ];

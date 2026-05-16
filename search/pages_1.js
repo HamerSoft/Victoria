@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['i_20do_20what_20i_20want_0',['Victoria — *&quot;Whatever, I do what I want!&quot;*',['../index.html',1,'']]]
+  ['1_200_202026_2005_2016_0',['0.1.0 (2026-05-16)',['../md_CHANGELOG.html',1,'']]],
+  ['16_1',['0.1.0 (2026-05-16)',['../md_CHANGELOG.html',1,'']]]
 ];
