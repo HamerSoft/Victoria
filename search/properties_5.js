@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['identifier_0',['Identifier',['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Asset.html#adaed0a74329dea25d21a253a09f61e8b',1,'HamerSoft::Victoria::Core::Extractor::Nodes::Asset']]],
+  ['isleaf_1',['isleaf',['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Asset.html#aa1e7dc69c1ba400595cdb2e3a18e9074',1,'HamerSoft.Victoria.Core.Extractor.Nodes.Asset.IsLeaf'],['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1FileSystemNode.html#a35caf89b2ab1c928034baf7eeb2fb7cf',1,'HamerSoft.Victoria.Core.Extractor.Nodes.FileSystemNode.IsLeaf'],['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Folder.html#ab08ed49ae7dc7a48d338f0351f1bb605',1,'HamerSoft.Victoria.Core.Extractor.Nodes.Folder.IsLeaf'],['../classHamerSoft_1_1Victoria_1_1Core_1_1Extractor_1_1Nodes_1_1Node.html#af2d43dd2a40dac2cc7829068067cce43',1,'HamerSoft.Victoria.Core.Extractor.Nodes.Node.IsLeaf']]],
+  ['isplaying_2',['isplaying',['../classHamerSoft_1_1Victoria_1_1EditorAudio_1_1EditorAudioSource.html#a06db6b036b50bd22139cf5fcb923d461',1,'HamerSoft.Victoria.EditorAudio.EditorAudioSource.IsPlaying'],['../interfaceHamerSoft_1_1Victoria_1_1Core_1_1Audio_1_1IAudioSource.html#ad805be3d52ad46039875f8f03c4d4613',1,'HamerSoft.Victoria.Core.Audio.IAudioSource.IsPlaying']]]
+];
