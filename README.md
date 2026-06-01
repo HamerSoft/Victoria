@@ -47,8 +47,8 @@ The package tree has a search bar. Type a name, Victoria runs a breadth-first se
 ### Runtime Import — *"I don't need the editor. I NEVER needed the editor."*
 
 Yes, Addressables exist. Yes, AssetBundles exist. Victoria is aware. Victoria imports `.unitypackage` files at runtime anyway, on a Tuesday afternoon, just because she can.
-
-This is a pure API. No file explorer, no window, no cross-platform file picker nonsense. You give Victoria a path. She does the rest.
+Victoria will accept the URI you give her and she will happily show you the import window. Once she imports your files to the `Application.persistentDataPath` you are on your own. Victoria is done!
+You can also use only the API like shown below:
 
 ```csharp
 var importer = new VictoriaRuntimeImporter();
